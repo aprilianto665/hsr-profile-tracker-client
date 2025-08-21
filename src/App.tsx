@@ -70,6 +70,12 @@ function App() {
           </div>
         </div>
       </div>
+
+      <footer className="absolute bottom-0 left-0 right-0 bg-black text-white py-2 px-4 z-30">
+        <p className="text-center text-xs md:text-sm font-mono">
+          © 2025 HSR Profile Tracker. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }
