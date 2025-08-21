@@ -44,15 +44,25 @@ function App() {
                 htmlFor="uid"
                 className="block text-lg md:text-xl font-bold text-black mb-3 md:mb-4 mt-4 md:mt-8 tracking-wide uppercase border-b-2 border-black pb-2"
               >
-                UID を入力してください
+                ENTER YOUR UID
               </label>
               <div className="flex flex-col md:flex-row border-3 border-black">
                 <input
-                  type="text"
+                  type="number"
                   id="uid"
                   value={uid}
-                  onChange={(e) => setUid(e.target.value)}
-                  placeholder="8xxxxxxxx"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= 9 && !value.includes('-')) {
+                      setUid(value);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') {
+                      e.preventDefault();
+                    }
+                  }}
+                  placeholder="800123456"
                   className="flex-1 px-3 md:px-6 py-3 md:py-6 text-lg md:text-2xl bg-white border-b-3 md:border-b-0 md:border-r-3 border-black text-black placeholder-gray-500 focus:outline-none font-mono tracking-wider focus:bg-gray-50"
                 />
                 <button
