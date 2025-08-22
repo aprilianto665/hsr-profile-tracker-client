@@ -274,6 +274,11 @@ function ProfileDetail() {
         { name: "Celestial Differentiator", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Celestial Differentiator", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
       ],
+      relicSetEffects: [
+        { setName: "Firesmith of Lava-Forging", pieces: 2, effect: "Increases Fire DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png" },
+        { setName: "Firesmith of Lava-Forging", pieces: 4, effect: "Increases Fire DMG by 10%. After using Skill, increases the wearer's next Basic ATK DMG by 12%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png" },
+        { setName: "Celestial Differentiator", pieces: 2, effect: "Increases the wearer's CRIT DMG by 16%. When the wearer's current CRIT DMG reaches 120% or higher, after entering battle, the wearer's CRIT Rate increases by 60% until the end of their first attack.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303.png" }
+      ],
     },
     {
       id: "1004",
@@ -300,6 +305,11 @@ function ProfileDetail() {
       planarRelics: [
         { name: "Pan-Cosmic Commercial Enterprise", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Pan-Cosmic Commercial Enterprise", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+      ],
+      relicSetEffects: [
+        { setName: "Genius of Brilliant Stars", pieces: 2, effect: "Increases Quantum DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
+        { setName: "Genius of Brilliant Stars", pieces: 4, effect: "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
+        { setName: "Pan-Cosmic Commercial Enterprise", pieces: 2, effect: "Increases the wearer's Effect Hit Rate by 10%. Meanwhile, the wearer's ATK increases by an amount that is equal to 25% of the current Effect Hit Rate, up to a maximum of 25%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304.png" }
       ],
     },
     {
@@ -328,6 +338,11 @@ function ProfileDetail() {
         { name: "Firmament Frontline: Glamoth", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Firmament Frontline: Glamoth", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
       ],
+      relicSetEffects: [
+        { setName: "Band of Sizzling Thunder", pieces: 2, effect: "Increases Lightning DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png" },
+        { setName: "Band of Sizzling Thunder", pieces: 4, effect: "Increases Lightning DMG by 10%. When the wearer uses their Skill, increases the wearer's ATK by 20% for 1 turn.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png" },
+        { setName: "Firmament Frontline: Glamoth", pieces: 2, effect: "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 135/160 or higher, the wearer deals 12%/18% more DMG.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305.png" }
+      ],
     },
     {
       id: "1006",
@@ -354,6 +369,11 @@ function ProfileDetail() {
       planarRelics: [
         { name: "Inert Salsotto", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Inert Salsotto", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+      ],
+      relicSetEffects: [
+        { setName: "Genius of Brilliant Stars", pieces: 2, effect: "Increases Quantum DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
+        { setName: "Genius of Brilliant Stars", pieces: 4, effect: "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
+        { setName: "Inert Salsotto", pieces: 2, effect: "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 50% or higher, the wearer's Ultimate and follow-up attack DMG increases by 15%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306.png" }
       ],
     },
     {
@@ -382,6 +402,11 @@ function ProfileDetail() {
         { name: "Rutilant Arena", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Rutilant Arena", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
       ],
+      relicSetEffects: [
+        { setName: "Hunter of Glacial Forest", pieces: 2, effect: "Increases Ice DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png" },
+        { setName: "Hunter of Glacial Forest", pieces: 4, effect: "Increases Ice DMG by 10%. After the wearer uses their Ultimate, their CRIT DMG increases by 25% for 2 turn(s).", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png" },
+        { setName: "Rutilant Arena", pieces: 2, effect: "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 70% or higher, the wearer's Basic ATK and Skill DMG increase by 20%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307.png" }
+      ],
     },
     {
       id: "1008",
@@ -408,6 +433,11 @@ function ProfileDetail() {
       planarRelics: [
         { name: "Broken Keel", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
         { name: "Broken Keel", level: 15, mainStat: "Energy Regen Rate", mainStatValue: "19.4%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}] },
+      ],
+      relicSetEffects: [
+        { setName: "Musketeer of Wild Wheat", pieces: 2, effect: "ATK increases by 12%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png" },
+        { setName: "Musketeer of Wild Wheat", pieces: 4, effect: "ATK increases by 12%. The wearer's SPD increases by 6% and Basic ATK DMG increases by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png" },
+        { setName: "Broken Keel", pieces: 2, effect: "Increases the wearer's Effect RES by 10%. When the wearer's Effect RES is at 30% or higher, all allies' CRIT DMG increases by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308.png" }
       ],
     },
   ];
