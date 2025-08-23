@@ -961,7 +961,6 @@ function ProfileDetail() {
                                   <div className="flex-1 min-w-0">
                                     <div className="mb-2">
                                       <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
-                                      <div className="text-xs text-black font-bold mt-1">{relic.name}</div>
                                     </div>
                                     <div className="mb-2">
                                       <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
@@ -1005,7 +1004,6 @@ function ProfileDetail() {
                                   <div className="flex-1 min-w-0">
                                     <div className="mb-2">
                                       <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
-                                      <div className="text-xs text-black font-bold mt-1">{relic.name}</div>
                                     </div>
                                     <div className="mb-2">
                                       <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
