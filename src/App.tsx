@@ -53,6 +53,20 @@ interface RelicSetEffect {
   icon: string;
 }
 
+interface Stats {
+  baseHp: number;
+  baseAtk: number;
+  baseDef: number;
+  spd: number;
+  critRate: number;
+  critDmg: number;
+  effectHitRate: number;
+  effectRes: number;
+  elementDmg: number;
+  breakEffect: number;
+  energyRegenRate: number;
+}
+
 interface Character {
   id: string;
   name: string;
@@ -62,6 +76,7 @@ interface Character {
   icon: string;
   portrait: string;
   eidolon: number;
+  stats: Stats;
   lightCone: {
     name: string;
     level: number;
@@ -194,6 +209,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1001.png",
       eidolon: 6,
+      stats: {
+        baseHp: 1058,
+        baseAtk: 511,
+        baseDef: 573,
+        spd: 101,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "Landau's Choice",
         level: 80,
@@ -226,6 +254,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1002.png",
       eidolon: 0,
+      stats: {
+        baseHp: 882,
+        baseAtk: 546,
+        baseDef: 396,
+        spd: 110,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "In the Night",
         level: 80,
@@ -258,6 +299,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1003.png",
       eidolon: 1,
+      stats: {
+        baseHp: 1047,
+        baseAtk: 756,
+        baseDef: 463,
+        spd: 96,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "Night on the Milky Way",
         level: 80,
@@ -290,6 +344,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1004.png",
       eidolon: 0,
+      stats: {
+        baseHp: 1125,
+        baseAtk: 620,
+        baseDef: 509,
+        spd: 102,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "In the Name of the World",
         level: 80,
@@ -322,6 +389,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1005.png",
       eidolon: 2,
+      stats: {
+        baseHp: 1086,
+        baseAtk: 679,
+        baseDef: 485,
+        spd: 104,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "Patience Is All You Need",
         level: 80,
@@ -354,6 +434,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1006.png",
       eidolon: 1,
+      stats: {
+        baseHp: 1047,
+        baseAtk: 640,
+        baseDef: 460,
+        spd: 107,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "Incessant Rain",
         level: 80,
@@ -386,6 +479,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1102.png",
       eidolon: 0,
+      stats: {
+        baseHp: 931,
+        baseAtk: 640,
+        baseDef: 363,
+        spd: 115,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "In the Night",
         level: 80,
@@ -418,6 +524,19 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1101.png",
       eidolon: 1,
+      stats: {
+        baseHp: 1241,
+        baseAtk: 582,
+        baseDef: 533,
+        spd: 99,
+        critRate: 5.0,
+        critDmg: 50.0,
+        effectHitRate: 0.0,
+        effectRes: 0.0,
+        elementDmg: 0.0,
+        breakEffect: 0.0,
+        energyRegenRate: 100.0,
+      },
       lightCone: {
         name: "But the Battle Isn't Over",
         level: 80,
@@ -680,197 +799,233 @@ function ProfileDetail() {
                   ))}
                 </div>
                 {selectedCharacter && (
-                  <div className="border-2 border-black p-6 bg-white relative z-30">
-                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
-                      <div className="flex-shrink-0 text-center md:text-left">
+                  <div className="border-2 border-black p-4 bg-white relative z-30">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                      <div className="flex flex-col items-center">
                         <img
                           src={selectedCharacter.portrait}
                           alt={selectedCharacter.name}
-                          className="w-48 h-48 object-cover border-2 border-black mx-auto md:mx-0"
+                          className="w-32 h-32 object-cover border-2 border-black mb-3"
                         />
+                        <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
+                          <span className="transform skew-x-12 inline-block">{selectedCharacter.name}</span>
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2 text-sm mt-3 w-full">
+                          <div className="text-center">
+                            <span className="font-bold block text-xs">ELEMENT</span>
+                            <span className="font-mono">{selectedCharacter.element}</span>
+                          </div>
+                          <div className="text-center">
+                            <span className="font-bold block text-xs">PATH</span>
+                            <span className="font-mono">{selectedCharacter.path}</span>
+                          </div>
+                          <div className="text-center">
+                            <span className="font-bold block text-xs">LEVEL</span>
+                            <span className="font-mono">{selectedCharacter.level}</span>
+                          </div>
+                          <div className="text-center">
+                            <span className="font-bold block text-xs">EIDOLON</span>
+                            <span className="font-mono">E{selectedCharacter.eidolon}</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="mb-6">
-                          <h4 className="text-xl font-black uppercase tracking-widest bg-black text-white px-4 py-2 border-2 border-black transform -skew-x-12 inline-block">
-                            <span className="transform skew-x-12 inline-block">{selectedCharacter.name}</span>
-                          </h4>
+                      <div>
+                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                          <span className="transform skew-x-12 inline-block">STATS</span>
+                        </h5>
+                        <div className="bg-white border-2 border-black p-3 relative">
+                          <div className="absolute left-1/2 top-3 bottom-3 w-px bg-black"></div>
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">HP:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.baseHp}</span>
+                            </div>
+                            <div className="flex justify-between pl-2">
+                              <span className="font-bold text-gray-700">ATK:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.baseAtk}</span>
+                            </div>
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">DEF:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.baseDef}</span>
+                            </div>
+                            <div className="flex justify-between pl-2">
+                              <span className="font-bold text-gray-700">SPD:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.spd}</span>
+                            </div>
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">CRIT Rate:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.critRate}%</span>
+                            </div>
+                            <div className="flex justify-between pl-2">
+                              <span className="font-bold text-gray-700">CRIT DMG:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.critDmg}%</span>
+                            </div>
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">Effect Hit:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.effectHitRate}%</span>
+                            </div>
+                            <div className="flex justify-between pl-2">
+                              <span className="font-bold text-gray-700">Effect RES:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.effectRes}%</span>
+                            </div>
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">{selectedCharacter.element} DMG:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.elementDmg}%</span>
+                            </div>
+                            <div className="flex justify-between pl-2">
+                              <span className="font-bold text-gray-700">Break Effect:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.breakEffect}%</span>
+                            </div>
+                            <div className="flex justify-between pr-2">
+                              <span className="font-bold text-gray-700">Energy Regen:</span>
+                              <span className="font-mono font-black">{selectedCharacter.stats.energyRegenRate}%</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base md:text-lg mb-6">
-                          <div>
-                            <span className="font-bold block">ELEMENT:</span>
-                            <span className="font-mono">
-                              {selectedCharacter.element}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="font-bold block">PATH:</span>
-                            <span className="font-mono">
-                              {selectedCharacter.path}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="font-bold block">LEVEL:</span>
-                            <span className="font-mono">
-                              {selectedCharacter.level}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="font-bold block">EIDOLON:</span>
-                            <span className="font-mono">
-                              E{selectedCharacter.eidolon}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="pt-6">
-                          <div className="mb-4">
-                            <h5 className="text-lg font-black uppercase tracking-widest bg-black text-white px-4 py-2 border-2 border-black transform -skew-x-12 inline-block">
-                              <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
-                            </h5>
-                          </div>
-                          <div className="flex flex-row items-start space-x-4">
+                      </div>
+                      <div>
+                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                          <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
+                        </h5>
+                        <div className="flex flex-col items-center space-y-3">
+                          <div className="relative">
                             <img
                               src={selectedCharacter.lightCone.icon}
                               alt={selectedCharacter.lightCone.name}
-                              className="w-16 h-16 object-cover border-2 border-black flex-shrink-0"
+                              className="w-20 h-20 object-cover border-2 border-black"
                             />
-                            <div className="flex-1 min-w-0 text-left">
-                              <div className="text-base md:text-lg font-mono font-bold break-words">
-                                {selectedCharacter.lightCone.name}
-                              </div>
-                              <div className="flex flex-col md:flex-row justify-between text-sm md:text-base mt-2 space-y-1 md:space-y-0">
-                                <span className="font-mono">
-                                  Level: {selectedCharacter.lightCone.level}
-                                </span>
-                                <span className="font-mono">
-                                  Superimposition:{" "}
-                                  {selectedCharacter.lightCone.superimposition}
-                                </span>
+                            <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
+                              {selectedCharacter.lightCone.superimposition}
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-mono font-bold break-words mb-2">
+                              {selectedCharacter.lightCone.name}
+                            </div>
+                            <div className="text-xs">
+                              <div className="font-mono">
+                                Level: {selectedCharacter.lightCone.level}
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className="pt-6 mt-6">
-                          <div className="mb-6">
-                            <h3 className="text-xl font-black uppercase tracking-widest bg-black text-white px-4 py-2 border-2 border-black transform -skew-x-12 inline-block">
-                              <span className="transform skew-x-12 inline-block">RELICS & ORNAMENTS</span>
-                            </h3>
-                          </div>
-                          <div className="space-y-4 mb-8">
-                            {selectedCharacter.relicSetEffects?.map((setEffect, index) => (
-                              <div key={index} className="bg-white border-2 border-black p-4">
-                                <div className="flex items-center mb-2">
-                                  <div className="relative mr-3">
-                                    <img
-                                      src={setEffect.icon}
-                                      alt={setEffect.setName}
-                                      className="w-12 h-12 object-cover border-2 border-black flex-shrink-0"
-                                    />
-                                    <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 py-0.5 font-black border-2 border-black">
-                                      {setEffect.pieces}
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                          <span className="transform skew-x-12 inline-block">SET EFFECTS</span>
+                        </h5>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {selectedCharacter.relicSetEffects?.map((setEffect, index) => (
+                            <div key={index} className="bg-white border border-black p-3">
+                              <div className="flex items-center mb-2">
+                                <div className="relative mr-2">
+                                  <img
+                                    src={setEffect.icon}
+                                    alt={setEffect.setName}
+                                    className="w-8 h-8 object-cover border border-black"
+                                  />
+                                  <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
+                                    {setEffect.pieces}
+                                  </div>
+                                </div>
+                                <div className="font-bold text-sm uppercase">{setEffect.setName}</div>
+                              </div>
+                              <div className="text-xs font-mono leading-relaxed">{setEffect.effect}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                            <span className="transform skew-x-12 inline-block">CAVITY RELICS</span>
+                          </h5>
+                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                            {selectedCharacter.cavityRelics.map((relic, index) => (
+                              <div key={index} className="bg-white border border-black p-3">
+                                <div className="flex items-start space-x-3">
+                                  <div className="relative">
+                                    <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
+                                      <img
+                                        src={relic.icon}
+                                        alt={relic.name}
+                                        className="w-10 h-10 object-cover"
+                                      />
+                                    </div>
+                                    <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
+                                      {relic.level}
                                     </div>
                                   </div>
-                                  <div className="font-bold text-lg uppercase tracking-wide">{setEffect.setName}</div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="mb-2">
+                                      <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
+                                      <div className="text-xs text-black font-bold mt-1">{relic.name}</div>
+                                    </div>
+                                    <div className="mb-2">
+                                      <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
+                                        {relic.mainStat}: {relic.mainStatValue}
+                                      </div>
+                                    </div>
+                                    <div className="space-y-1">
+                                      {relic.subStats.map((subStat, subIndex) => (
+                                        <div key={subIndex} className="text-xs font-bold text-black flex justify-between">
+                                          <span>• {subStat.stat}</span>
+                                          <span className="font-black">{subStat.value}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="text-sm font-mono leading-relaxed">{setEffect.effect}</div>
                               </div>
                             ))}
                           </div>
-                          <div className="space-y-8">
-                            <div>
-                              <div className="mb-6">
-                                <h5 className="text-lg font-black uppercase tracking-widest bg-black text-white px-4 py-2 border-2 border-black transform -skew-x-12 inline-block">
-                                  <span className="transform skew-x-12 inline-block">CAVITY RELICS</span>
-                                </h5>
-                              </div>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                {selectedCharacter.cavityRelics.map((relic, index) => (
-                                  <div key={index} className="bg-white border-2 border-black p-4">
-                                    <div className="flex items-start space-x-4">
-                                      <div className="relative">
-                                        <div className="w-20 h-20 border-2 border-black bg-white flex items-center justify-center">
-                                          <img
-                                            src={relic.icon}
-                                            alt={relic.name}
-                                            className="w-16 h-16 object-cover"
-                                          />
-                                        </div>
-                                        <div className="absolute -top-2 -right-2 bg-black text-white text-sm px-2 py-1 font-black border-2 border-black">
-                                          {relic.level}
-                                        </div>
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <div className="mb-3">
-                                          <div className="font-black text-lg uppercase tracking-wide text-black border-b-2 border-black pb-1">{relic.slot}</div>
-                                          <div className="text-sm text-black font-bold mt-1">{relic.name}</div>
-                                        </div>
-                                        <div className="mb-4">
-                                          <div className="text-base font-black text-white bg-black px-3 py-2 border-2 border-black inline-block transform -skew-x-12">
-                                            <span className="transform skew-x-12 inline-block">{relic.mainStat}: {relic.mainStatValue}</span>
-                                          </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                          {relic.subStats.map((subStat, subIndex) => (
-                                            <div key={subIndex} className="text-sm font-bold text-black flex justify-between border-b border-black pb-1">
-                                              <span>• {subStat.stat}</span>
-                                              <span className="font-black">{subStat.value}</span>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                            <span className="transform skew-x-12 inline-block">PLANAR ORNAMENTS</span>
+                          </h5>
+                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                            {selectedCharacter.planarRelics.map((relic, index) => (
+                              <div key={index} className="bg-white border border-black p-3">
+                                <div className="flex items-start space-x-3">
+                                  <div className="relative">
+                                    <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
+                                      <img
+                                        src={relic.icon}
+                                        alt={relic.name}
+                                        className="w-10 h-10 object-cover"
+                                      />
+                                    </div>
+                                    <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
+                                      {relic.level}
                                     </div>
                                   </div>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <div className="mb-6">
-                                <h5 className="text-lg font-black uppercase tracking-widest bg-black text-white px-4 py-2 border-2 border-black transform -skew-x-12 inline-block">
-                                  <span className="transform skew-x-12 inline-block">PLANAR ORNAMENTS</span>
-                                </h5>
-                              </div>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                {selectedCharacter.planarRelics.map((relic, index) => (
-                                  <div key={index} className="bg-white border-2 border-black p-4">
-                                    <div className="flex items-start space-x-4">
-                                      <div className="relative">
-                                        <div className="w-20 h-20 border-2 border-black bg-white flex items-center justify-center">
-                                          <img
-                                            src={relic.icon}
-                                            alt={relic.name}
-                                            className="w-16 h-16 object-cover"
-                                          />
-                                        </div>
-                                        <div className="absolute -top-2 -right-2 bg-black text-white text-sm px-2 py-1 font-black border-2 border-black">
-                                          {relic.level}
-                                        </div>
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <div className="mb-3">
-                                          <div className="font-black text-lg uppercase tracking-wide text-black border-b-2 border-black pb-1">{relic.slot}</div>
-                                          <div className="text-sm text-black font-bold mt-1">{relic.name}</div>
-                                        </div>
-                                        <div className="mb-4">
-                                          <div className="text-base font-black text-white bg-black px-3 py-2 border-2 border-black inline-block transform -skew-x-12">
-                                            <span className="transform skew-x-12 inline-block">{relic.mainStat}: {relic.mainStatValue}</span>
-                                          </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                          {relic.subStats.map((subStat, subIndex) => (
-                                            <div key={subIndex} className="text-sm font-bold text-black flex justify-between border-b border-black pb-1">
-                                              <span>• {subStat.stat}</span>
-                                              <span className="font-black">{subStat.value}</span>
-                                            </div>
-                                          ))}
-                                        </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="mb-2">
+                                      <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
+                                      <div className="text-xs text-black font-bold mt-1">{relic.name}</div>
+                                    </div>
+                                    <div className="mb-2">
+                                      <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
+                                        {relic.mainStat}: {relic.mainStatValue}
                                       </div>
                                     </div>
+                                    <div className="space-y-1">
+                                      {relic.subStats.map((subStat, subIndex) => (
+                                        <div key={subIndex} className="text-xs font-bold text-black flex justify-between">
+                                          <span>• {subStat.stat}</span>
+                                          <span className="font-black">{subStat.value}</span>
+                                        </div>
+                                      ))}
+                                    </div>
                                   </div>
-                                ))}
+                                </div>
                               </div>
-                            </div>
+                            ))}
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
