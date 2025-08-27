@@ -95,11 +95,23 @@ interface ProfileData {
 function HomePage() {
   const [uid, setUid] = useState("");
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (uid.trim()) {
-      navigate(`/profile/${uid}`);
+      try {
+        const response = await fetch(`http://localhost:3000/checkprofile/${uid}`);
+        const data = await response.json();
+        if (data.exists) {
+          navigate(`/profile/${uid}`);
+        } else {
+          setMessage(data.message);
+        }
+      } catch (error) {
+        console.error("Error checking profile:", error);
+        setMessage("Failed to check profile. Please try again.");
+      }
     }
   };
 
@@ -177,6 +189,9 @@ function HomePage() {
                 </button>
               </div>
             </form>
+            {message && (
+              <p className="mt-4 text-center text-red-500 font-bold">{message}</p>
+            )}
           </div>
         </div>
       </div>
