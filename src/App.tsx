@@ -918,7 +918,7 @@ function ProfileDetail() {
                         </h5>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                           {selectedCharacter.relicSetEffects?.map((setEffect, index) => (
-                            <div key={index} className="bg-white border border-black p-3">
+                            <div key={index} className="bg-white border-2 border-black p-3">
                               <div className="flex items-center mb-2">
                                 <div className="relative mr-2">
                                   <img
@@ -944,7 +944,7 @@ function ProfileDetail() {
                           </h5>
                           <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                             {selectedCharacter.cavityRelics.map((relic, index) => (
-                              <div key={index} className="bg-white border border-black p-3">
+                              <div key={index} className="bg-white border-2 border-black p-3">
                                 <div className="flex items-start space-x-3">
                                   <div className="relative">
                                     <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
@@ -987,7 +987,7 @@ function ProfileDetail() {
                           </h5>
                           <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                             {selectedCharacter.planarRelics.map((relic, index) => (
-                              <div key={index} className="bg-white border border-black p-3">
+                              <div key={index} className="bg-white border-2 border-black p-3">
                                 <div className="flex items-start space-x-3">
                                   <div className="relative">
                                     <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
