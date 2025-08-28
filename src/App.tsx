@@ -132,6 +132,20 @@ function getStatIconPath(stat: string): string | null {
   return null;
 }
 
+// Map element name to its DMG icon path
+function getElementDmgIcon(element: string): string | null {
+  const e = element.toLowerCase();
+  if (e.includes("ice")) return "icon/property/IconIceAddedRatio.png";
+  if (e.includes("fire")) return "icon/property/IconFireAddedRatio.png";
+  if (e.includes("wind")) return "icon/property/IconWindAddedRatio.png";
+  if (e.includes("physical")) return "icon/property/IconPhysicalAddedRatio.png";
+  if (e.includes("quantum")) return "icon/property/IconQuantumAddedRatio.png";
+  if (e.includes("imaginary")) return "icon/property/IconImaginaryAddedRatio.png";
+  if (e.includes("thunder") || e.includes("lightning"))
+    return "icon/property/IconThunderAddedRatio.png";
+  return null;
+}
+
 // Helper to convert stat names into compact icon-like abbreviations
 function getStatAbbr(stat: string): string {
   const s = stat.toLowerCase();
@@ -194,7 +208,9 @@ function PropertyIcon({
   }
   const normalized = icon.startsWith("/") ? icon.slice(1) : icon;
   return (
-    <span className={`${size} inline-flex items-center justify-center bg-black border border-black`}>
+    <span
+      className={`${size} inline-flex items-center justify-center bg-black border border-black`}
+    >
       <img
         src={`${STAR_RAIL_RES_BASE}${normalized}`}
         alt={name}
@@ -217,9 +233,7 @@ function AnyStatIcon({
 }) {
   const p = getStatIconPath(stat);
   if (p) {
-    return (
-      <PropertyIcon icon={p} name={stat} field={stat} size={size} />
-    );
+    return <PropertyIcon icon={p} name={stat} field={stat} size={size} />;
   }
   return <StatIcon stat={stat} inverse={inverse} size={size} />;
 }
@@ -1555,9 +1569,7 @@ function ProfileDetail() {
       ></div>
 
       <div
-        className={`relative z-10 min-h-screen flex flex-col items-center p-4 pb-16 ${
-          activeTab === "info" ? "justify-center" : "justify-start pt-20"
-        }`}
+        className={`relative z-10 min-h-screen flex flex-col items-center justify-center p-4 pb-16 pt-20`}
       >
         <div
           className={`w-full max-w-7xl mx-auto relative ${
@@ -1743,9 +1755,9 @@ function ProfileDetail() {
                 </div>
                 {selectedCharacter && (
                   <div className="border-2 border-black p-4 bg-white relative z-30">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-x-3">
+                    <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start justify-between">
                       {/* Character Info */}
-                      <div className="lg:col-span-4">
+                      <div className="w-full lg:w-[300px]">
                         <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
                           {/* Left: Portrait with centered bottom stars */}
                           <div className="flex flex-col items-center">
@@ -1759,10 +1771,15 @@ function ProfileDetail() {
                                 className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
                                 title={`${selectedCharacter.rarity}-Star`}
                               >
-                                <span className="text-black text-xs md:text-sm" aria-hidden="true">
+                                <span
+                                  className="text-black text-xs md:text-sm"
+                                  aria-hidden="true"
+                                >
                                   {"★".repeat(selectedCharacter.rarity)}
                                 </span>
-                                <span className="sr-only">{selectedCharacter.rarity}-Star</span>
+                                <span className="sr-only">
+                                  {selectedCharacter.rarity}-Star
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -1797,111 +1814,6 @@ function ProfileDetail() {
                           </div>
                         </div>
 
-                        {/* Stats */}
-                        <div className="w-full mt-2">
-                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                            <span className="transform skew-x-12 inline-block">
-                              STATS
-                            </span>
-                          </h5>
-                          <div className="bg-white border-2 border-black p-3 relative text-sm">
-                            <div className="grid grid-cols-2 gap-x-6 gap-y-1 relative">
-                              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-black"></div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  HP:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseHp}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  ATK:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseAtk}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  DEF:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseDef}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  SPD:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.spd}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  CRIT Rate:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.critRate}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  CRIT DMG:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.critDmg}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  Effect Hit:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.effectHitRate}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  Effect RES:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.effectRes}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  {selectedCharacter.element} DMG:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.elementDmg}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700">
-                                  Break Effect:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.breakEffect}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="font-bold text-gray-700 whitespace-nowrap">
-                                  Energy Regen:
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.energyRegenRate}%
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Light Cone and Set Effects */}
-                      <div className="lg:col-span-3">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
                           <span className="transform skew-x-12 inline-block">
                             LIGHT CONE
@@ -1918,7 +1830,10 @@ function ProfileDetail() {
                               {selectedCharacter.lightCone.superimposition}
                             </div>
                             {/* Stars centered on bottom border of light cone image */}
-                            <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform" aria-hidden="true">
+                            <div
+                              className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
+                              aria-hidden="true"
+                            >
                               <span className="text-black text-xs md:text-sm">
                                 {"★".repeat(selectedCharacter.lightCone.rarity)}
                               </span>
@@ -1928,21 +1843,32 @@ function ProfileDetail() {
                             <div className="font-mono font-bold break-words mb-1">
                               {selectedCharacter.lightCone.name}
                             </div>
-                            <div className="font-mono">Level: {selectedCharacter.lightCone.level}</div>
-                            {selectedCharacter.lightCone.attributes && selectedCharacter.lightCone.attributes.length > 0 ? (
+                            <div className="font-mono">
+                              Level: {selectedCharacter.lightCone.level}
+                            </div>
+                            {selectedCharacter.lightCone.attributes &&
+                            selectedCharacter.lightCone.attributes.length >
+                              0 ? (
                               <div className="bg-white border-2 border-black p-2 mt-2">
                                 <div className="grid grid-cols-3 gap-2 text-xs">
-                                  {selectedCharacter.lightCone.attributes.map((attr, idx) => (
-                                    <div key={idx} className="flex items-center justify-between">
-                                      {React.createElement(PropertyIcon, {
-                                        icon: attr.icon,
-                                        name: attr.name,
-                                        field: attr.field,
-                                        size: "w-5 h-5",
-                                      })}
-                                      <span className="font-mono font-black ml-2">{attr.display}</span>
-                                    </div>
-                                  ))}
+                                  {selectedCharacter.lightCone.attributes.map(
+                                    (attr, idx) => (
+                                      <div
+                                        key={idx}
+                                        className="flex items-center justify-between"
+                                      >
+                                        {React.createElement(PropertyIcon, {
+                                          icon: attr.icon,
+                                          name: attr.name,
+                                          field: attr.field,
+                                          size: "w-5 h-5",
+                                        })}
+                                        <span className="font-mono font-black ml-2">
+                                          {attr.display}
+                                        </span>
+                                      </div>
+                                    )
+                                  )}
                                 </div>
                               </div>
                             ) : (
@@ -1950,16 +1876,28 @@ function ProfileDetail() {
                                 <div className="bg-white border-2 border-black p-2 mt-2">
                                   <div className="grid grid-cols-3 gap-2 text-xs">
                                     <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">HP:</span>
-                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.hp}</span>
+                                      <span className="font-bold text-gray-700">
+                                        HP:
+                                      </span>
+                                      <span className="font-mono font-black">
+                                        {selectedCharacter.lightCone.stats.hp}
+                                      </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">ATK:</span>
-                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.atk}</span>
+                                      <span className="font-bold text-gray-700">
+                                        ATK:
+                                      </span>
+                                      <span className="font-mono font-black">
+                                        {selectedCharacter.lightCone.stats.atk}
+                                      </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">DEF:</span>
-                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.def}</span>
+                                      <span className="font-bold text-gray-700">
+                                        DEF:
+                                      </span>
+                                      <span className="font-mono font-black">
+                                        {selectedCharacter.lightCone.stats.def}
+                                      </span>
                                     </div>
                                   </div>
                                 </div>
@@ -1967,27 +1905,160 @@ function ProfileDetail() {
                             )}
                           </div>
                         </div>
+                      </div>
 
+                      {/* Light Cone and Set Effects */}
+                      <div className="w-full lg:w-3/12">
+                        {/* Stats */}
+                        <div className="w-full mt-2">
+                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                            <span className="transform skew-x-12 inline-block">
+                              STATS
+                            </span>
+                          </h5>
+                          <div className="bg-white border-2 border-black p-3 text-sm">
+                            <div className="grid grid-cols-1 gap-y-1">
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="HP" inverse size="w-5 h-5" />
+                                  <span>HP:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseHp}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="ATK" inverse size="w-5 h-5" />
+                                  <span>ATK:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseAtk}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="DEF" inverse size="w-5 h-5" />
+                                  <span>DEF:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseDef}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="SPD" inverse size="w-5 h-5" />
+                                  <span>SPD:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.spd}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="CRIT Rate" inverse size="w-5 h-5" />
+                                  <span>CRIT Rate:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.critRate}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="CRIT DMG" inverse size="w-5 h-5" />
+                                  <span>CRIT DMG:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.critDmg}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="Effect Hit" inverse size="w-5 h-5" />
+                                  <span>Effect Hit:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.effectHitRate}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="Effect RES" inverse size="w-5 h-5" />
+                                  <span>Effect RES:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.effectRes}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  {(() => {
+                                    const icon = getElementDmgIcon(selectedCharacter.element);
+                                    return icon ? (
+                                      <PropertyIcon
+                                        icon={icon}
+                                        name={`${selectedCharacter.element} DMG`}
+                                        field="DMG"
+                                        size="w-5 h-5"
+                                      />
+                                    ) : (
+                                      <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
+                                    );
+                                  })()}
+                                  <span>{selectedCharacter.element} DMG:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.elementDmg}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2">
+                                  <AnyStatIcon stat="Break Effect" inverse size="w-5 h-5" />
+                                  <span>Break Effect:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.breakEffect}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="font-bold text-gray-700 flex items-center gap-2 whitespace-nowrap">
+                                  <AnyStatIcon stat="Energy Regen" inverse size="w-5 h-5" />
+                                  <span>Energy Regen:</span>
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.energyRegenRate}%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Set Effects moved into Light Cone section above */}
+
+                      {/* Relics & Planar - combined section, 3-column cards */}
+                      <div className="w-full lg:w-5/12">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
                           <span className="transform skew-x-12 inline-block">
                             SET EFFECTS
                           </span>
                         </h5>
-                        <div className="grid grid-cols-1 gap-2">
-                          {selectedCharacter.relicSetEffects
-                            ?.filter((se) => !se.icon.includes("/relic/3"))
-                            .map((setEffect, index) => (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-4 md:mb-6">
+                          {selectedCharacter.relicSetEffects?.map(
+                            (setEffect, index) => (
                               <div
-                                key={`relic-${index}`}
+                                key={`seteffect-${index}`}
                                 className="bg-white border-2 border-black p-2 h-full"
                               >
                                 <div className="flex items-center mb-1">
                                   <div className="relative mr-2">
-                                    <img
-                                      src={setEffect.icon}
-                                      alt={setEffect.setName}
-                                      className="w-8 h-8 object-cover border border-black"
-                                    />
+                                    <div className="w-8 h-8 border border-black bg-white flex items-center justify-center">
+                                      <img
+                                        src={setEffect.icon}
+                                        alt={setEffect.setName}
+                                        className="w-6 h-6 object-contain"
+                                      />
+                                    </div>
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
                                       {setEffect.pieces}
                                     </div>
@@ -1996,52 +2067,11 @@ function ProfileDetail() {
                                     {setEffect.setName}
                                   </div>
                                 </div>
-                                <div className="text-xs font-mono leading-tight">
-                                  {setEffect.effect}
-                                </div>
+                                {/* Description removed per request */}
                               </div>
-                            ))}
-
-                          {selectedCharacter.relicSetEffects?.some((se) =>
-                            se.icon.includes("/relic/3")
-                          ) && (
-                            <div className="space-y-2">
-                              {selectedCharacter.relicSetEffects
-                                ?.filter((se) => se.icon.includes("/relic/3"))
-                                .map((setEffect, index) => (
-                                  <div
-                                    key={`planar-${index}`}
-                                    className="bg-white border-2 border-black p-2"
-                                  >
-                                    <div className="flex items-center mb-1">
-                                      <div className="relative mr-2">
-                                        <img
-                                          src={setEffect.icon}
-                                          alt={setEffect.setName}
-                                          className="w-8 h-8 object-cover border border-black"
-                                        />
-                                        <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
-                                          {setEffect.pieces}
-                                        </div>
-                                      </div>
-                                      <div className="font-bold text-xs uppercase">
-                                        {setEffect.setName}
-                                      </div>
-                                    </div>
-                                    <div className="text-xs font-mono leading-tight">
-                                      {setEffect.effect}
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
+                            )
                           )}
                         </div>
-                      </div>
-
-                      {/* Set Effects moved into Light Cone section above */}
-
-                      {/* Relics & Planar - combined section, 3-column cards */}
-                      <div className="lg:col-span-5 lg:col-start-8 lg:row-start-1">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
                           <span className="transform skew-x-12 inline-block">
                             RELICS &amp; PLANAR
@@ -2058,7 +2088,9 @@ function ProfileDetail() {
                             >
                               {/* Slot label centered on top border */}
                               <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 bg-white px-2 leading-none inline-block whitespace-nowrap">
-                                <span className="font-black text-xs uppercase whitespace-nowrap">{relic.slot}</span>
+                                <span className="font-black text-xs uppercase whitespace-nowrap">
+                                  {relic.slot}
+                                </span>
                               </div>
                               <div>
                                 <div className="flex items-start space-x-2">
@@ -2077,7 +2109,11 @@ function ProfileDetail() {
                                   <div className="flex-1 min-w-0">
                                     <div className="mb-1">
                                       <div className="text-xs font-black text-white bg-black px-1.5 py-0.5 border border-black inline-flex items-center space-x-1">
-                                        <AnyStatIcon stat={relic.mainStat} inverse={true} size="w-4 h-4" />
+                                        <AnyStatIcon
+                                          stat={relic.mainStat}
+                                          inverse={true}
+                                          size="w-4 h-4"
+                                        />
                                         <span>{relic.mainStatValue}</span>
                                       </div>
                                     </div>
@@ -2091,16 +2127,27 @@ function ProfileDetail() {
                                       className="text-xs font-bold text-black flex items-center justify-between"
                                     >
                                       <span className="flex items-center space-x-1">
-                                        <AnyStatIcon stat={subStat.stat} size="w-5 h-5" inverse={true} />
+                                        <AnyStatIcon
+                                          stat={subStat.stat}
+                                          size="w-5 h-5"
+                                          inverse={true}
+                                        />
                                       </span>
-                                      <span className="font-black">{subStat.value}</span>
+                                      <span className="font-black">
+                                        {subStat.value}
+                                      </span>
                                     </div>
                                   ))}
                                 </div>
                               </div>
                               {/* Rarity stars centered on bottom border of card */}
-                              <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform" aria-hidden="true">
-                                <span className="text-black text-xs">{"★".repeat(relic.rarity ?? 5)}</span>
+                              <div
+                                className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
+                                aria-hidden="true"
+                              >
+                                <span className="text-black text-xs">
+                                  {"★".repeat(relic.rarity ?? 5)}
+                                </span>
                               </div>
                             </div>
                           ))}
