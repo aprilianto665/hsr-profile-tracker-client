@@ -76,6 +76,7 @@ interface Character {
   icon: string;
   portrait: string;
   eidolon: number;
+  rarity: number; // 4 or 5
   stats: Stats;
   lightCone: {
     name: string;
@@ -101,7 +102,9 @@ function HomePage() {
     e.preventDefault();
     if (uid.trim()) {
       try {
-        const response = await fetch(`http://localhost:3000/checkprofile/${uid}`);
+        const response = await fetch(
+          `http://localhost:3000/checkprofile/${uid}`
+        );
         const data = await response.json();
         if (data.exists) {
           navigate(`/profile/${uid}`);
@@ -190,7 +193,9 @@ function HomePage() {
               </div>
             </form>
             {message && (
-              <p className="mt-4 text-center text-red-500 font-bold">{message}</p>
+              <p className="mt-4 text-center text-red-500 font-bold">
+                {message}
+              </p>
             )}
           </div>
         </div>
@@ -224,6 +229,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1001.png",
       eidolon: 6,
+      rarity: 4,
       stats: {
         baseHp: 1058,
         baseAtk: 511,
@@ -244,19 +250,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23003.png",
       },
       cavityRelics: [
-        { name: "Knight of Purity Palace", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_0.png", slot: "Head", subStats: [{stat: "DEF%", value: "5.8%"}, {stat: "ATK", value: "19"}, {stat: "SPD", value: "2"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Knight of Purity Palace", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "11.6%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
-        { name: "Knight of Purity Palace", level: 15, mainStat: "DEF%", mainStatValue: "54.0%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "7.7%"}] },
-        { name: "Knight of Purity Palace", level: 15, mainStat: "SPD", mainStatValue: "25", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "8.6%"}, {stat: "ATK", value: "19"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
+        {
+          name: "Knight of Purity Palace",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "ATK", value: "19" },
+            { stat: "SPD", value: "2" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Knight of Purity Palace",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "11.6%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Knight of Purity Palace",
+          level: 15,
+          mainStat: "DEF%",
+          mainStatValue: "54.0%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "7.7%" },
+          ],
+        },
+        {
+          name: "Knight of Purity Palace",
+          level: 15,
+          mainStat: "SPD",
+          mainStatValue: "25",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "8.6%" },
+            { stat: "ATK", value: "19" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Fleet of the Ageless", level: 15, mainStat: "HP%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301_0.png", slot: "Planar Sphere", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF", value: "19"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Fleet of the Ageless", level: 15, mainStat: "Energy Regen Rate", mainStatValue: "19.4%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}] },
+        {
+          name: "Fleet of the Ageless",
+          level: 15,
+          mainStat: "HP%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF", value: "19" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Fleet of the Ageless",
+          level: 15,
+          mainStat: "Energy Regen Rate",
+          mainStatValue: "19.4%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Knight of Purity Palace", pieces: 2, effect: "Increases DEF by 15%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101.png" },
-        { setName: "Knight of Purity Palace", pieces: 4, effect: "Increases DEF by 15%. When the wearer is hit or hits an enemy target, they regenerate 2 Energy. This effect can only be triggered once per turn.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101.png" },
-        { setName: "Fleet of the Ageless", pieces: 2, effect: "Increases the wearer's Max HP by 12%. When the wearer's SPD reaches 120 or higher, all allies' ATK increases by 8%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301.png" }
+        {
+          setName: "Knight of Purity Palace",
+          pieces: 2,
+          effect: "Increases DEF by 15%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101.png",
+        },
+        {
+          setName: "Knight of Purity Palace",
+          pieces: 4,
+          effect:
+            "Increases DEF by 15%. When the wearer is hit or hits an enemy target, they regenerate 2 Energy. This effect can only be triggered once per turn.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/101.png",
+        },
+        {
+          setName: "Fleet of the Ageless",
+          pieces: 2,
+          effect:
+            "Increases the wearer's Max HP by 12%. When the wearer's SPD reaches 120 or higher, all allies' ATK increases by 8%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/301.png",
+        },
       ],
     },
     {
@@ -269,6 +368,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1002.png",
       eidolon: 0,
+      rarity: 4,
       stats: {
         baseHp: 882,
         baseAtk: 546,
@@ -289,19 +389,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
       },
       cavityRelics: [
-        { name: "Eagle of Twilight Line", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Eagle of Twilight Line", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Eagle of Twilight Line", level: 15, mainStat: "Wind DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Eagle of Twilight Line", level: 15, mainStat: "SPD", mainStatValue: "25", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Eagle of Twilight Line",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Eagle of Twilight Line",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Eagle of Twilight Line",
+          level: 15,
+          mainStat: "Wind DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Eagle of Twilight Line",
+          level: 15,
+          mainStat: "SPD",
+          mainStatValue: "25",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Space Sealing Station", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Space Sealing Station", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Space Sealing Station",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Space Sealing Station",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Eagle of Twilight Line", pieces: 2, effect: "Increases Wind DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102.png" },
-        { setName: "Eagle of Twilight Line", pieces: 4, effect: "Increases Wind DMG by 10%. After the wearer uses their Ultimate, their action is Advanced Forward by 25%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102.png" },
-        { setName: "Space Sealing Station", pieces: 2, effect: "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 120 or higher, the wearer's ATK increases by an extra 12%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302.png" }
+        {
+          setName: "Eagle of Twilight Line",
+          pieces: 2,
+          effect: "Increases Wind DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102.png",
+        },
+        {
+          setName: "Eagle of Twilight Line",
+          pieces: 4,
+          effect:
+            "Increases Wind DMG by 10%. After the wearer uses their Ultimate, their action is Advanced Forward by 25%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/102.png",
+        },
+        {
+          setName: "Space Sealing Station",
+          pieces: 2,
+          effect:
+            "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 120 or higher, the wearer's ATK increases by an extra 12%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/302.png",
+        },
       ],
     },
     {
@@ -314,6 +507,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1003.png",
       eidolon: 1,
+      rarity: 5,
       stats: {
         baseHp: 1047,
         baseAtk: 756,
@@ -334,19 +528,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23002.png",
       },
       cavityRelics: [
-        { name: "Firesmith of Lava-Forging", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Firesmith of Lava-Forging", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Firesmith of Lava-Forging", level: 15, mainStat: "Fire DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Firesmith of Lava-Forging", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
+        {
+          name: "Firesmith of Lava-Forging",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Firesmith of Lava-Forging",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Firesmith of Lava-Forging",
+          level: 15,
+          mainStat: "Fire DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Firesmith of Lava-Forging",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Celestial Differentiator", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Celestial Differentiator", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Celestial Differentiator",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Celestial Differentiator",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Firesmith of Lava-Forging", pieces: 2, effect: "Increases Fire DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png" },
-        { setName: "Firesmith of Lava-Forging", pieces: 4, effect: "Increases Fire DMG by 10%. After using Skill, increases the wearer's next Basic ATK DMG by 12%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png" },
-        { setName: "Celestial Differentiator", pieces: 2, effect: "Increases the wearer's CRIT DMG by 16%. When the wearer's current CRIT DMG reaches 120% or higher, after entering battle, the wearer's CRIT Rate increases by 60% until the end of their first attack.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303.png" }
+        {
+          setName: "Firesmith of Lava-Forging",
+          pieces: 2,
+          effect: "Increases Fire DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png",
+        },
+        {
+          setName: "Firesmith of Lava-Forging",
+          pieces: 4,
+          effect:
+            "Increases Fire DMG by 10%. After using Skill, increases the wearer's next Basic ATK DMG by 12%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/103.png",
+        },
+        {
+          setName: "Celestial Differentiator",
+          pieces: 2,
+          effect:
+            "Increases the wearer's CRIT DMG by 16%. When the wearer's current CRIT DMG reaches 120% or higher, after entering battle, the wearer's CRIT Rate increases by 60% until the end of their first attack.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/303.png",
+        },
       ],
     },
     {
@@ -359,6 +646,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1004.png",
       eidolon: 0,
+      rarity: 5,
       stats: {
         baseHp: 1125,
         baseAtk: 620,
@@ -379,19 +667,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23001.png",
       },
       cavityRelics: [
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "Imaginary DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "Imaginary DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Pan-Cosmic Commercial Enterprise", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Pan-Cosmic Commercial Enterprise", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Pan-Cosmic Commercial Enterprise",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Pan-Cosmic Commercial Enterprise",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Genius of Brilliant Stars", pieces: 2, effect: "Increases Quantum DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
-        { setName: "Genius of Brilliant Stars", pieces: 4, effect: "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
-        { setName: "Pan-Cosmic Commercial Enterprise", pieces: 2, effect: "Increases the wearer's Effect Hit Rate by 10%. Meanwhile, the wearer's ATK increases by an amount that is equal to 25% of the current Effect Hit Rate, up to a maximum of 25%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304.png" }
+        {
+          setName: "Genius of Brilliant Stars",
+          pieces: 2,
+          effect: "Increases Quantum DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png",
+        },
+        {
+          setName: "Genius of Brilliant Stars",
+          pieces: 4,
+          effect:
+            "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png",
+        },
+        {
+          setName: "Pan-Cosmic Commercial Enterprise",
+          pieces: 2,
+          effect:
+            "Increases the wearer's Effect Hit Rate by 10%. Meanwhile, the wearer's ATK increases by an amount that is equal to 25% of the current Effect Hit Rate, up to a maximum of 25%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/304.png",
+        },
       ],
     },
     {
@@ -404,6 +785,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1005.png",
       eidolon: 2,
+      rarity: 5,
       stats: {
         baseHp: 1086,
         baseAtk: 679,
@@ -424,19 +806,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23042.png",
       },
       cavityRelics: [
-        { name: "Band of Sizzling Thunder", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Band of Sizzling Thunder", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Band of Sizzling Thunder", level: 15, mainStat: "Lightning DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Band of Sizzling Thunder", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
+        {
+          name: "Band of Sizzling Thunder",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Band of Sizzling Thunder",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Band of Sizzling Thunder",
+          level: 15,
+          mainStat: "Lightning DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Band of Sizzling Thunder",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Firmament Frontline: Glamoth", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Firmament Frontline: Glamoth", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Firmament Frontline: Glamoth",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Firmament Frontline: Glamoth",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Band of Sizzling Thunder", pieces: 2, effect: "Increases Lightning DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png" },
-        { setName: "Band of Sizzling Thunder", pieces: 4, effect: "Increases Lightning DMG by 10%. When the wearer uses their Skill, increases the wearer's ATK by 20% for 1 turn.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png" },
-        { setName: "Firmament Frontline: Glamoth", pieces: 2, effect: "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 135/160 or higher, the wearer deals 12%/18% more DMG.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305.png" }
+        {
+          setName: "Band of Sizzling Thunder",
+          pieces: 2,
+          effect: "Increases Lightning DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png",
+        },
+        {
+          setName: "Band of Sizzling Thunder",
+          pieces: 4,
+          effect:
+            "Increases Lightning DMG by 10%. When the wearer uses their Skill, increases the wearer's ATK by 20% for 1 turn.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/105.png",
+        },
+        {
+          setName: "Firmament Frontline: Glamoth",
+          pieces: 2,
+          effect:
+            "Increases the wearer's ATK by 12%. When the wearer's SPD reaches 135/160 or higher, the wearer deals 12%/18% more DMG.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/305.png",
+        },
       ],
     },
     {
@@ -449,6 +924,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1006.png",
       eidolon: 1,
+      rarity: 5,
       stats: {
         baseHp: 1047,
         baseAtk: 640,
@@ -469,19 +945,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21004.png",
       },
       cavityRelics: [
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "Quantum DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Genius of Brilliant Stars", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "Quantum DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Genius of Brilliant Stars",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Inert Salsotto", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Inert Salsotto", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Inert Salsotto",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Inert Salsotto",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Genius of Brilliant Stars", pieces: 2, effect: "Increases Quantum DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
-        { setName: "Genius of Brilliant Stars", pieces: 4, effect: "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png" },
-        { setName: "Inert Salsotto", pieces: 2, effect: "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 50% or higher, the wearer's Ultimate and follow-up attack DMG increases by 15%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306.png" }
+        {
+          setName: "Genius of Brilliant Stars",
+          pieces: 2,
+          effect: "Increases Quantum DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png",
+        },
+        {
+          setName: "Genius of Brilliant Stars",
+          pieces: 4,
+          effect:
+            "Increases Quantum DMG by 10%. When the wearer deals DMG to the target enemy, ignores 10% DEF. If the target enemy has Quantum Weakness, the wearer additionally ignores 10% DEF.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/104.png",
+        },
+        {
+          setName: "Inert Salsotto",
+          pieces: 2,
+          effect:
+            "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 50% or higher, the wearer's Ultimate and follow-up attack DMG increases by 15%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/306.png",
+        },
       ],
     },
     {
@@ -494,6 +1063,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1102.png",
       eidolon: 0,
+      rarity: 5,
       stats: {
         baseHp: 931,
         baseAtk: 640,
@@ -514,19 +1084,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
       },
       cavityRelics: [
-        { name: "Hunter of Glacial Forest", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Hunter of Glacial Forest", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Hunter of Glacial Forest", level: 15, mainStat: "Quantum DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Hunter of Glacial Forest", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect Hit Rate%", value: "3.9%"}] },
+        {
+          name: "Hunter of Glacial Forest",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Hunter of Glacial Forest",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Hunter of Glacial Forest",
+          level: 15,
+          mainStat: "Quantum DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Hunter of Glacial Forest",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect Hit Rate%", value: "3.9%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Rutilant Arena", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Rutilant Arena", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Rutilant Arena",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Rutilant Arena",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Hunter of Glacial Forest", pieces: 2, effect: "Increases Ice DMG by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png" },
-        { setName: "Hunter of Glacial Forest", pieces: 4, effect: "Increases Ice DMG by 10%. After the wearer uses their Ultimate, their CRIT DMG increases by 25% for 2 turn(s).", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png" },
-        { setName: "Rutilant Arena", pieces: 2, effect: "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 70% or higher, the wearer's Basic ATK and Skill DMG increase by 20%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307.png" }
+        {
+          setName: "Hunter of Glacial Forest",
+          pieces: 2,
+          effect: "Increases Ice DMG by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png",
+        },
+        {
+          setName: "Hunter of Glacial Forest",
+          pieces: 4,
+          effect:
+            "Increases Ice DMG by 10%. After the wearer uses their Ultimate, their CRIT DMG increases by 25% for 2 turn(s).",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/106.png",
+        },
+        {
+          setName: "Rutilant Arena",
+          pieces: 2,
+          effect:
+            "Increases the wearer's CRIT Rate by 8%. When the wearer's current CRIT Rate reaches 70% or higher, the wearer's Basic ATK and Skill DMG increase by 20%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/307.png",
+        },
       ],
     },
     {
@@ -539,6 +1202,7 @@ function ProfileDetail() {
       portrait:
         "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/image/character_portrait/1101.png",
       eidolon: 1,
+      rarity: 5,
       stats: {
         baseHp: 1241,
         baseAtk: 582,
@@ -559,19 +1223,112 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23004.png",
       },
       cavityRelics: [
-        { name: "Musketeer of Wild Wheat", level: 15, mainStat: "HP", mainStatValue: "705", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_0.png", slot: "Head", subStats: [{stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Musketeer of Wild Wheat", level: 15, mainStat: "ATK", mainStatValue: "352", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_1.png", slot: "Hands", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}, {stat: "Effect RES%", value: "3.9%"}] },
-        { name: "Musketeer of Wild Wheat", level: 15, mainStat: "Wind DMG%", mainStatValue: "38.8%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_2.png", slot: "Body", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "CRIT Rate%", value: "2.9%"}, {stat: "SPD", value: "2"}] },
-        { name: "Musketeer of Wild Wheat", level: 15, mainStat: "SPD", mainStatValue: "25", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_3.png", slot: "Feet", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT DMG%", value: "5.8%"}] },
+        {
+          name: "Musketeer of Wild Wheat",
+          level: 15,
+          mainStat: "HP",
+          mainStatValue: "705",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_0.png",
+          slot: "Head",
+          subStats: [
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Musketeer of Wild Wheat",
+          level: 15,
+          mainStat: "ATK",
+          mainStatValue: "352",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_1.png",
+          slot: "Hands",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+            { stat: "Effect RES%", value: "3.9%" },
+          ],
+        },
+        {
+          name: "Musketeer of Wild Wheat",
+          level: 15,
+          mainStat: "Wind DMG%",
+          mainStatValue: "38.8%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_2.png",
+          slot: "Body",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+            { stat: "SPD", value: "2" },
+          ],
+        },
+        {
+          name: "Musketeer of Wild Wheat",
+          level: 15,
+          mainStat: "SPD",
+          mainStatValue: "25",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107_3.png",
+          slot: "Feet",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT DMG%", value: "5.8%" },
+          ],
+        },
       ],
       planarRelics: [
-        { name: "Broken Keel", level: 15, mainStat: "ATK%", mainStatValue: "43.2%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_0.png", slot: "Planar Sphere", subStats: [{stat: "HP%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}, {stat: "CRIT Rate%", value: "2.9%"}] },
-        { name: "Broken Keel", level: 15, mainStat: "Energy Regen Rate", mainStatValue: "19.4%", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_1.png", slot: "Link Rope", subStats: [{stat: "HP", value: "42"}, {stat: "ATK%", value: "4.3%"}, {stat: "DEF%", value: "5.8%"}] },
+        {
+          name: "Broken Keel",
+          level: 15,
+          mainStat: "ATK%",
+          mainStatValue: "43.2%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_0.png",
+          slot: "Planar Sphere",
+          subStats: [
+            { stat: "HP%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+            { stat: "CRIT Rate%", value: "2.9%" },
+          ],
+        },
+        {
+          name: "Broken Keel",
+          level: 15,
+          mainStat: "Energy Regen Rate",
+          mainStatValue: "19.4%",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308_1.png",
+          slot: "Link Rope",
+          subStats: [
+            { stat: "HP", value: "42" },
+            { stat: "ATK%", value: "4.3%" },
+            { stat: "DEF%", value: "5.8%" },
+          ],
+        },
       ],
       relicSetEffects: [
-        { setName: "Musketeer of Wild Wheat", pieces: 2, effect: "ATK increases by 12%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png" },
-        { setName: "Musketeer of Wild Wheat", pieces: 4, effect: "ATK increases by 12%. The wearer's SPD increases by 6% and Basic ATK DMG increases by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png" },
-        { setName: "Broken Keel", pieces: 2, effect: "Increases the wearer's Effect RES by 10%. When the wearer's Effect RES is at 30% or higher, all allies' CRIT DMG increases by 10%.", icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308.png" }
+        {
+          setName: "Musketeer of Wild Wheat",
+          pieces: 2,
+          effect: "ATK increases by 12%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png",
+        },
+        {
+          setName: "Musketeer of Wild Wheat",
+          pieces: 4,
+          effect:
+            "ATK increases by 12%. The wearer's SPD increases by 6% and Basic ATK DMG increases by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/107.png",
+        },
+        {
+          setName: "Broken Keel",
+          pieces: 2,
+          effect:
+            "Increases the wearer's Effect RES by 10%. When the wearer's Effect RES is at 30% or higher, all allies' CRIT DMG increases by 10%.",
+          icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/relic/308.png",
+        },
       ],
     },
   ];
@@ -629,7 +1386,7 @@ function ProfileDetail() {
         }`}
       >
         <div
-          className={`w-full max-w-6xl mx-auto relative ${
+          className={`w-full max-w-7xl mx-auto relative ${
             activeTab === "info" ? "" : "mt-8"
           }`}
         >
@@ -815,94 +1572,170 @@ function ProfileDetail() {
                 </div>
                 {selectedCharacter && (
                   <div className="border-2 border-black p-4 bg-white relative z-30">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                      <div className="flex flex-col items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                      {/* Character Info */}
+                      <div className="lg:col-span-3 flex flex-col items-center">
                         <img
                           src={selectedCharacter.portrait}
                           alt={selectedCharacter.name}
                           className="w-32 h-32 object-cover border-2 border-black mb-3"
                         />
                         <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
-                          <span className="transform skew-x-12 inline-block">{selectedCharacter.name}</span>
+                          <span className="transform skew-x-12 inline-block">
+                            {selectedCharacter.name}
+                          </span>
                         </h4>
+                        <div className="mt-2" title={`${selectedCharacter.rarity}-Star`}>
+                          <span className="text-black text-base md:text-lg leading-none" aria-hidden="true">
+                            {"★".repeat(selectedCharacter.rarity)}
+                          </span>
+                          <span className="sr-only">{selectedCharacter.rarity}-Star</span>
+                        </div>
                         <div className="grid grid-cols-2 gap-2 text-sm mt-3 w-full">
                           <div className="text-center">
-                            <span className="font-bold block text-xs">ELEMENT</span>
-                            <span className="font-mono">{selectedCharacter.element}</span>
+                            <span className="font-bold block text-xs">
+                              ELEMENT
+                            </span>
+                            <span className="font-mono">
+                              {selectedCharacter.element}
+                            </span>
                           </div>
                           <div className="text-center">
-                            <span className="font-bold block text-xs">PATH</span>
-                            <span className="font-mono">{selectedCharacter.path}</span>
+                            <span className="font-bold block text-xs">
+                              PATH
+                            </span>
+                            <span className="font-mono">
+                              {selectedCharacter.path}
+                            </span>
                           </div>
                           <div className="text-center">
-                            <span className="font-bold block text-xs">LEVEL</span>
-                            <span className="font-mono">{selectedCharacter.level}</span>
+                            <span className="font-bold block text-xs">
+                              LEVEL
+                            </span>
+                            <span className="font-mono">
+                              {selectedCharacter.level}
+                            </span>
                           </div>
                           <div className="text-center">
-                            <span className="font-bold block text-xs">EIDOLON</span>
-                            <span className="font-mono">E{selectedCharacter.eidolon}</span>
+                            <span className="font-bold block text-xs">
+                              EIDOLON
+                            </span>
+                            <span className="font-mono">
+                              E{selectedCharacter.eidolon}
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div>
+
+                      {/* Stats */}
+                      <div className="lg:col-span-3">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                          <span className="transform skew-x-12 inline-block">STATS</span>
+                          <span className="transform skew-x-12 inline-block">
+                            STATS
+                          </span>
                         </h5>
-                        <div className="bg-white border-2 border-black p-3 relative">
-                          <div className="absolute left-1/2 top-3 bottom-3 w-px bg-black"></div>
-                          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">HP:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.baseHp}</span>
+                        <div className="bg-white border-2 border-black p-3 relative text-sm">
+                          <div className="grid grid-cols-1 gap-y-1">
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                HP:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.baseHp}
+                              </span>
                             </div>
-                            <div className="flex justify-between pl-2">
-                              <span className="font-bold text-gray-700">ATK:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.baseAtk}</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                ATK:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.baseAtk}
+                              </span>
                             </div>
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">DEF:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.baseDef}</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                DEF:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.baseDef}
+                              </span>
                             </div>
-                            <div className="flex justify-between pl-2">
-                              <span className="font-bold text-gray-700">SPD:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.spd}</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                SPD:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.spd}
+                              </span>
                             </div>
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">CRIT Rate:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.critRate}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                CRIT Rate:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.critRate}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pl-2">
-                              <span className="font-bold text-gray-700">CRIT DMG:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.critDmg}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                CRIT DMG:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.critDmg}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">Effect Hit:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.effectHitRate}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                Effect Hit:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.effectHitRate}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pl-2">
-                              <span className="font-bold text-gray-700">Effect RES:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.effectRes}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                Effect RES:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.effectRes}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">{selectedCharacter.element} DMG:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.elementDmg}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                {selectedCharacter.element} DMG:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.elementDmg}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pl-2">
-                              <span className="font-bold text-gray-700">Break Effect:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.breakEffect}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                Break Effect:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.breakEffect}%
+                              </span>
                             </div>
-                            <div className="flex justify-between pr-2">
-                              <span className="font-bold text-gray-700">Energy Regen:</span>
-                              <span className="font-mono font-black">{selectedCharacter.stats.energyRegenRate}%</span>
+                            <div className="flex justify-between">
+                              <span className="font-bold text-gray-700">
+                                Energy Regen:
+                              </span>
+                              <span className="font-mono font-black">
+                                {selectedCharacter.stats.energyRegenRate}%
+                              </span>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div>
+
+                      {/* Light Cone and Set Effects */}
+                      <div className="lg:col-span-3">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                          <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
+                          <span className="transform skew-x-12 inline-block">
+                            LIGHT CONE
+                          </span>
                         </h5>
-                        <div className="flex flex-col items-center space-y-3">
+                        <div className="flex items-center space-x-3 mb-4">
                           <div className="relative">
                             <img
                               src={selectedCharacter.lightCone.icon}
@@ -913,60 +1746,73 @@ function ProfileDetail() {
                               {selectedCharacter.lightCone.superimposition}
                             </div>
                           </div>
-                          <div className="text-center">
-                            <div className="text-sm font-mono font-bold break-words mb-2">
+                          <div className="text-sm">
+                            <div className="font-mono font-bold break-words mb-1">
                               {selectedCharacter.lightCone.name}
                             </div>
-                            <div className="text-xs">
-                              <div className="font-mono">
-                                Level: {selectedCharacter.lightCone.level}
-                              </div>
+                            <div className="font-mono">
+                              Level: {selectedCharacter.lightCone.level}
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div>
+
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                          <span className="transform skew-x-12 inline-block">SET EFFECTS</span>
+                          <span className="transform skew-x-12 inline-block">
+                            SET EFFECTS
+                          </span>
                         </h5>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                          {selectedCharacter.relicSetEffects?.map((setEffect, index) => (
-                            <div key={index} className="bg-white border-2 border-black p-3">
-                              <div className="flex items-center mb-2">
-                                <div className="relative mr-2">
-                                  <img
-                                    src={setEffect.icon}
-                                    alt={setEffect.setName}
-                                    className="w-8 h-8 object-cover border border-black"
-                                  />
-                                  <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
-                                    {setEffect.pieces}
+                        <div className="space-y-2">
+                          {selectedCharacter.relicSetEffects?.map(
+                            (setEffect, index) => (
+                              <div
+                                key={index}
+                                className="bg-white border-2 border-black p-2"
+                              >
+                                <div className="flex items-center mb-1">
+                                  <div className="relative mr-2">
+                                    <img
+                                      src={setEffect.icon}
+                                      alt={setEffect.setName}
+                                      className="w-8 h-8 object-cover border border-black"
+                                    />
+                                    <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
+                                      {setEffect.pieces}
+                                    </div>
+                                  </div>
+                                  <div className="font-bold text-xs uppercase">
+                                    {setEffect.setName}
                                   </div>
                                 </div>
-                                <div className="font-bold text-sm uppercase">{setEffect.setName}</div>
+                                <div className="text-xs font-mono leading-tight">
+                                  {setEffect.effect}
+                                </div>
                               </div>
-                              <div className="text-xs font-mono leading-relaxed">{setEffect.effect}</div>
-                            </div>
-                          ))}
+                            )
+                          )}
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                            <span className="transform skew-x-12 inline-block">CAVITY RELICS</span>
-                          </h5>
-                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                            {selectedCharacter.cavityRelics.map((relic, index) => (
-                              <div key={index} className="bg-white border-2 border-black p-3">
-                                <div className="flex items-start space-x-3">
+
+                      {/* Relics */}
+                      <div className="lg:col-span-3">
+                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                          <span className="transform skew-x-12 inline-block">
+                            RELICS
+                          </span>
+                        </h5>
+                        <div className="grid grid-cols-2 gap-2">
+                          {selectedCharacter.cavityRelics.map(
+                            (relic, index) => (
+                              <div
+                                key={index}
+                                className="bg-white border-2 border-black p-2"
+                              >
+                                <div className="flex items-start space-x-2">
                                   <div className="relative">
-                                    <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
+                                    <div className="w-10 h-10 border border-black bg-white flex items-center justify-center">
                                       <img
                                         src={relic.icon}
                                         alt={relic.name}
-                                        className="w-10 h-10 object-cover"
+                                        className="w-8 h-8 object-cover"
                                       />
                                     </div>
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
@@ -974,42 +1820,49 @@ function ProfileDetail() {
                                     </div>
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <div className="mb-2">
-                                      <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
+                                    <div className="mb-1">
+                                      <div className="font-black text-xs uppercase text-black border-b border-black pb-0.5">
+                                        {relic.slot}
+                                      </div>
                                     </div>
-                                    <div className="mb-2">
-                                      <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
+                                    <div className="mb-1">
+                                      <div className="text-xs font-black text-white bg-black px-1 py-0.5 border border-black inline-block">
                                         {relic.mainStat}: {relic.mainStatValue}
                                       </div>
                                     </div>
-                                    <div className="space-y-1">
-                                      {relic.subStats.map((subStat, subIndex) => (
-                                        <div key={subIndex} className="text-xs font-bold text-black flex justify-between">
-                                          <span>• {subStat.stat}</span>
-                                          <span className="font-black">{subStat.value}</span>
-                                        </div>
-                                      ))}
+                                    <div className="space-y-0.5">
+                                      {relic.subStats.map(
+                                        (subStat, subIndex) => (
+                                          <div
+                                            key={subIndex}
+                                            className="text-xs font-bold text-black flex justify-between"
+                                          >
+                                            <span>• {subStat.stat}</span>
+                                            <span className="font-black">
+                                              {subStat.value}
+                                            </span>
+                                          </div>
+                                        )
+                                      )}
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                            <span className="transform skew-x-12 inline-block">PLANAR ORNAMENTS</span>
-                          </h5>
-                          <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                            {selectedCharacter.planarRelics.map((relic, index) => (
-                              <div key={index} className="bg-white border-2 border-black p-3">
-                                <div className="flex items-start space-x-3">
+                            )
+                          )}
+                          {selectedCharacter.planarRelics.map(
+                            (relic, index) => (
+                              <div
+                                key={index}
+                                className="bg-white border-2 border-black p-2"
+                              >
+                                <div className="flex items-start space-x-2">
                                   <div className="relative">
-                                    <div className="w-12 h-12 border border-black bg-white flex items-center justify-center">
+                                    <div className="w-10 h-10 border border-black bg-white flex items-center justify-center">
                                       <img
                                         src={relic.icon}
                                         alt={relic.name}
-                                        className="w-10 h-10 object-cover"
+                                        className="w-8 h-8 object-cover"
                                       />
                                     </div>
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
@@ -1017,27 +1870,36 @@ function ProfileDetail() {
                                     </div>
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <div className="mb-2">
-                                      <div className="font-black text-sm uppercase text-black border-b border-black pb-1">{relic.slot}</div>
+                                    <div className="mb-1">
+                                      <div className="font-black text-xs uppercase text-black border-b border-black pb-0.5">
+                                        {relic.slot}
+                                      </div>
                                     </div>
-                                    <div className="mb-2">
-                                      <div className="text-xs font-black text-white bg-black px-2 py-1 border border-black inline-block">
+                                    <div className="mb-1">
+                                      <div className="text-xs font-black text-white bg-black px-1 py-0.5 border border-black inline-block">
                                         {relic.mainStat}: {relic.mainStatValue}
                                       </div>
                                     </div>
-                                    <div className="space-y-1">
-                                      {relic.subStats.map((subStat, subIndex) => (
-                                        <div key={subIndex} className="text-xs font-bold text-black flex justify-between">
-                                          <span>• {subStat.stat}</span>
-                                          <span className="font-black">{subStat.value}</span>
-                                        </div>
-                                      ))}
+                                    <div className="space-y-0.5">
+                                      {relic.subStats.map(
+                                        (subStat, subIndex) => (
+                                          <div
+                                            key={subIndex}
+                                            className="text-xs font-bold text-black flex justify-between"
+                                          >
+                                            <span>• {subStat.stat}</span>
+                                            <span className="font-black">
+                                              {subStat.value}
+                                            </span>
+                                          </div>
+                                        )
+                                      )}
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            ))}
-                          </div>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
