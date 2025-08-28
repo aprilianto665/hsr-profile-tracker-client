@@ -1822,7 +1822,6 @@ function ProfileDetail() {
     },
   ];
 
-  // Set first character as default when characters tab is active
   React.useEffect(() => {
     if (
       activeTab === "characters" &&
@@ -2057,301 +2056,375 @@ function ProfileDetail() {
                 {selectedCharacter && (
                   <div className="border-2 border-black p-4 bg-white relative z-30">
                     <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start justify-between">
-                      {/* Character Info */}
-                      <div className="w-full lg:w-[320px]">
-                        <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
-                          {/* Left: Portrait with centered bottom stars */}
-                          <div className="flex flex-col items-center">
-                            <div className="relative inline-block mb-4">
-                              <img
-                                src={selectedCharacter.portrait}
-                                alt={selectedCharacter.name}
-                                className="w-32 h-32 object-cover border-2 border-black"
-                              />
-                              <div
-                                className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
-                                title={`${selectedCharacter.rarity}-Star`}
-                              >
-                                <span
-                                  className="text-black text-xs md:text-sm"
-                                  aria-hidden="true"
-                                >
-                                  {"★".repeat(selectedCharacter.rarity)}
-                                </span>
-                                <span className="sr-only">
-                                  {selectedCharacter.rarity}-Star
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Right: Character info text beside image */}
-                          <div className="mt-3 md:mt-0 md:flex-1">
-                            <div className="text-left space-y-2">
-                              <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
-                                <span className="transform skew-x-12 inline-block">
-                                  {selectedCharacter.name}
-                                </span>
-                              </h4>
-                            </div>
-                            <div className="mt-2 text-sm w-full space-y-1 text-left">
-                              <div className="font-mono">
-                                <span className="font-bold">Element</span> :{" "}
-                                {selectedCharacter.element}
-                              </div>
-                              <div className="font-mono">
-                                <span className="font-bold">Path</span> :{" "}
-                                {selectedCharacter.path}
-                              </div>
-                              <div className="font-mono">
-                                <span className="font-bold">Level</span> :{" "}
-                                {selectedCharacter.level}
-                              </div>
-                              <div className="font-mono">
-                                <span className="font-bold">Eidolon Level</span>{" "}
-                                : {selectedCharacter.eidolon}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                          <span className="transform skew-x-12 inline-block">
-                            LIGHT CONE
-                          </span>
-                        </h5>
-                        <div className="flex items-center space-x-3 mb-4">
-                          <div className="relative">
-                            <img
-                              src={selectedCharacter.lightCone.icon}
-                              alt={selectedCharacter.lightCone.name}
-                              className="w-24 h-24 object-cover border-2 border-black"
-                            />
-                            <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
-                              {selectedCharacter.lightCone.superimposition}
-                            </div>
-                            {/* Stars centered on bottom border of light cone image */}
-                            <div
-                              className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
-                              aria-hidden="true"
-                            >
-                              <span className="text-black text-xs md:text-sm">
-                                {"★".repeat(selectedCharacter.lightCone.rarity)}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="text-sm">
-                            <div className="font-mono font-bold break-words mb-1">
-                              {selectedCharacter.lightCone.name}
-                            </div>
-                            <div className="font-mono">
-                              Level: {selectedCharacter.lightCone.level}
-                            </div>
-                            {(() => {
-                              const attrs = buildLightConeAttributes(
-                                selectedCharacter.lightCone
-                              );
-                              return (
-                                <div className="bg-white border-2 border-black p-2 mt-2">
-                                  <div className="grid grid-cols-3 gap-2 text-xs">
-                                    {attrs.map((attr, idx) => (
-                                      <div
-                                        key={idx}
-                                        className="flex items-center justify-between"
-                                      >
-                                        {React.createElement(PropertyIcon, {
-                                          icon: attr.icon,
-                                          name: attr.name,
-                                          field: attr.field,
-                                          size: "w-5 h-5",
-                                        })}
-                                        <span className="font-mono font-black ml-2">
-                                          {attr.display}
-                                        </span>
-                                      </div>
-                                    ))}
+                      <div className="flex flex-col w-[650px]">
+                        <div className="flex gap-6 w-full">
+                          {/* Character Info */}
+                          <div className="w-full lg:w-full">
+                            <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
+                              {/* Left: Portrait with centered bottom stars */}
+                              <div className="flex flex-col items-center">
+                                <div className="relative inline-block mb-4">
+                                  <img
+                                    src={selectedCharacter.portrait}
+                                    alt={selectedCharacter.name}
+                                    className="w-32 h-32 object-cover border-2 border-black"
+                                  />
+                                  <div
+                                    className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
+                                    title={`${selectedCharacter.rarity}-Star`}
+                                  >
+                                    <span
+                                      className="text-black text-xs md:text-sm"
+                                      aria-hidden="true"
+                                    >
+                                      {"★".repeat(selectedCharacter.rarity)}
+                                    </span>
+                                    <span className="sr-only">
+                                      {selectedCharacter.rarity}-Star
+                                    </span>
                                   </div>
                                 </div>
-                              );
-                            })()}
-                          </div>
-                        </div>
-                      </div>
+                              </div>
 
-                      {/* Light Cone and Set Effects */}
-                      <div className="w-full lg:w-3/12">
-                        {/* Stats */}
-                        <div className="w-full mt-2">
-                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                            <span className="transform skew-x-12 inline-block">
-                              STATS
-                            </span>
-                          </h5>
-                          <div className="bg-white border-2 border-black p-3 text-sm">
-                            <div className="grid grid-cols-1 gap-y-1">
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="HP"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>HP:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseHp}
-                                </span>
+                              {/* Right: Character info text beside image */}
+                              <div className="mt-3 md:mt-0 md:flex-1">
+                                <div className="text-left space-y-2">
+                                  <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
+                                    <span className="transform skew-x-12 inline-block">
+                                      {selectedCharacter.name}
+                                    </span>
+                                  </h4>
+                                </div>
+                                <div className="mt-2 text-sm w-full space-y-1 text-left">
+                                  <div className="font-mono">
+                                    <span className="font-bold">Element</span> :{" "}
+                                    {selectedCharacter.element}
+                                  </div>
+                                  <div className="font-mono">
+                                    <span className="font-bold">Path</span> :{" "}
+                                    {selectedCharacter.path}
+                                  </div>
+                                  <div className="font-mono">
+                                    <span className="font-bold">Level</span> :{" "}
+                                    {selectedCharacter.level}
+                                  </div>
+                                  <div className="font-mono">
+                                    <span className="font-bold">
+                                      Eidolon Level
+                                    </span>{" "}
+                                    : {selectedCharacter.eidolon}
+                                  </div>
+                                </div>
                               </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="ATK"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>ATK:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseAtk}
-                                </span>
+                            </div>
+
+                            <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                              <span className="transform skew-x-12 inline-block">
+                                LIGHT CONE
+                              </span>
+                            </h5>
+                            <div className="flex items-center space-x-3 mb-4">
+                              <div className="relative">
+                                <img
+                                  src={selectedCharacter.lightCone.icon}
+                                  alt={selectedCharacter.lightCone.name}
+                                  className="w-24 h-24 object-cover border-2 border-black"
+                                />
+                                <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
+                                  {selectedCharacter.lightCone.superimposition}
+                                </div>
+                                {/* Stars centered on bottom border of light cone image */}
+                                <div
+                                  className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
+                                  aria-hidden="true"
+                                >
+                                  <span className="text-black text-xs md:text-sm">
+                                    {"★".repeat(
+                                      selectedCharacter.lightCone.rarity
+                                    )}
+                                  </span>
+                                </div>
                               </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="DEF"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>DEF:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.baseDef}
-                                </span>
+                              <div className="text-sm">
+                                <div className="font-mono font-bold break-words mb-1">
+                                  {selectedCharacter.lightCone.name}
+                                </div>
+                                <div className="font-mono">
+                                  Level: {selectedCharacter.lightCone.level}
+                                </div>
+                                {(() => {
+                                  const attrs = buildLightConeAttributes(
+                                    selectedCharacter.lightCone
+                                  );
+                                  return (
+                                    <div className="bg-white border-2 border-black p-2 mt-2">
+                                      <div className="grid grid-cols-3 gap-2 text-xs">
+                                        {attrs.map((attr, idx) => (
+                                          <div
+                                            key={idx}
+                                            className="flex items-center justify-between"
+                                          >
+                                            {React.createElement(PropertyIcon, {
+                                              icon: attr.icon,
+                                              name: attr.name,
+                                              field: attr.field,
+                                              size: "w-5 h-5",
+                                            })}
+                                            <span className="font-mono font-black ml-2">
+                                              {attr.display}
+                                            </span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  );
+                                })()}
                               </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="SPD"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>SPD:</span>
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-full">
+                            {/* Stats */}
+                            <div className="w-full mt-2">
+                              <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                                <span className="transform skew-x-12 inline-block">
+                                  STATS
                                 </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.spd}
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="CRIT Rate"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>CRIT Rate:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.critRate}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="CRIT DMG"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>CRIT DMG:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.critDmg}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="Effect Hit"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>Effect Hit:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.effectHitRate}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="Effect RES"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>Effect RES:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.effectRes}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  {(() => {
-                                    const icon = getElementDmgIcon(
-                                      selectedCharacter.element
-                                    );
-                                    return icon ? (
-                                      <PropertyIcon
-                                        icon={icon}
-                                        name={`${selectedCharacter.element} DMG`}
-                                        field="DMG"
-                                        size="w-5 h-5"
-                                      />
-                                    ) : (
+                              </h5>
+                              <div className="bg-white border-2 border-black p-3 text-sm">
+                                <div className="grid grid-cols-1 gap-y-1">
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
                                       <AnyStatIcon
-                                        stat="DMG"
+                                        stat="HP"
                                         inverse
                                         size="w-5 h-5"
                                       />
-                                    );
-                                  })()}
-                                  <span>{selectedCharacter.element} DMG:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.elementDmg}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon
-                                    stat="Break Effect"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>Break Effect:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.breakEffect}%
-                                </span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="font-bold text-gray-700 flex items-center gap-2 whitespace-nowrap">
-                                  <AnyStatIcon
-                                    stat="Energy Regen"
-                                    inverse
-                                    size="w-5 h-5"
-                                  />
-                                  <span>Energy Regen:</span>
-                                </span>
-                                <span className="font-mono font-black">
-                                  {selectedCharacter.stats.energyRegenRate}%
-                                </span>
+                                      <span>HP:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.baseHp}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="ATK"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>ATK:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.baseAtk}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="DEF"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>DEF:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.baseDef}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="SPD"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>SPD:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.spd}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="CRIT Rate"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>CRIT Rate:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.critRate}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="CRIT DMG"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>CRIT DMG:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.critDmg}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="Effect Hit"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>Effect Hit:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.effectHitRate}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="Effect RES"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>Effect RES:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.effectRes}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      {(() => {
+                                        const icon = getElementDmgIcon(
+                                          selectedCharacter.element
+                                        );
+                                        return icon ? (
+                                          <PropertyIcon
+                                            icon={icon}
+                                            name={`${selectedCharacter.element} DMG`}
+                                            field="DMG"
+                                            size="w-5 h-5"
+                                          />
+                                        ) : (
+                                          <AnyStatIcon
+                                            stat="DMG"
+                                            inverse
+                                            size="w-5 h-5"
+                                          />
+                                        );
+                                      })()}
+                                      <span>
+                                        {selectedCharacter.element} DMG:
+                                      </span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.elementDmg}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2">
+                                      <AnyStatIcon
+                                        stat="Break Effect"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>Break Effect:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.breakEffect}%
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between items-center">
+                                    <span className="font-bold text-gray-700 flex items-center gap-2 whitespace-nowrap">
+                                      <AnyStatIcon
+                                        stat="Energy Regen"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
+                                      <span>Energy Regen:</span>
+                                    </span>
+                                    <span className="font-mono font-black">
+                                      {selectedCharacter.stats.energyRegenRate}%
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                        {/* Relics Score Summary */}
+                        <div className="w-full">
+                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                            <span className="transform skew-x-12 inline-block">
+                              RELICS SCORE SUMMARY
+                            </span>
+                          </h5>
+                          {(() => {
+                            const relics = [
+                              ...selectedCharacter.cavityRelics,
+                              ...selectedCharacter.planarRelics,
+                            ];
+                            const baseScore = relics.reduce(
+                              (sum, r) => sum + computeRelicScore(r),
+                              0
+                            );
+                            const avgScore = relics.length
+                              ? baseScore / relics.length
+                              : 0;
+                            const grade = computeRelicRank(avgScore);
+                            const setCount = selectedCharacter.relicSetEffects
+                              ? selectedCharacter.relicSetEffects.length
+                              : 0;
+                            const setBonus = setCount * 2.5;
+                            const total = baseScore + setBonus;
+                            const totalEff = relics.reduce(
+                              (sum, r) => sum + computeRelicEff(r),
+                              0
+                            );
+                            const avgEff = relics.length
+                              ? totalEff / relics.length
+                              : 0;
+                            return (
+                              <div className="space-y-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                  {/* Rank */}
+                                  <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
+                                    <div className="font-bold text-xs uppercase">
+                                      Rank
+                                    </div>
+                                    <div className="text-6xl font-black">
+                                      {grade}
+                                    </div>
+                                  </div>
+                                  {/* Score Breakdown */}
+                                  <div className="bg-white border-2 border-black p-3">
+                                    <div className="text-xs font-bold uppercase mb-1">
+                                      Score Breakdown
+                                    </div>
+                                    <div className="flex justify-between text-sm font-mono">
+                                      <span>Base Relic Score:</span>
+                                      <span>{baseScore.toFixed(1)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm font-mono">
+                                      <span>Set Bonus:</span>
+                                      <span>{setBonus.toFixed(1)}</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm font-mono font-black">
+                                      <span>Total:</span>
+                                      <span>{total.toFixed(1)}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })()}
+                        </div>
                       </div>
-
-                      {/* Set Effects moved into Light Cone section above */}
 
                       {/* Relics & Planar - combined section, 3-column cards */}
                       <div className="w-full lg:w-5/12">
