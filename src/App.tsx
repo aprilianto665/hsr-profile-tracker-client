@@ -109,6 +109,29 @@ interface ProfileData {
 const STAR_RAIL_RES_BASE =
   "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
 
+// Map stat names to property icon relative paths under STAR_RAIL_RES_BASE
+function getStatIconPath(stat: string): string | null {
+  const s = stat.toLowerCase();
+  if (s.includes("crit dmg")) return "icon/property/IconCriticalDamage.png";
+  if (s.includes("crit rate")) return "icon/property/IconCriticalChance.png";
+  if (s.includes("energy") && s.includes("regen"))
+    return "icon/property/IconEnergyRecovery.png";
+  if (s.includes("effect") && s.includes("res"))
+    return "icon/property/IconStatusResistance.png";
+  if (s.includes("effect") && (s.includes("hit") || s.includes("prob")))
+    return "icon/property/IconStatusProbability.png";
+  if (s.includes("break")) return "icon/property/IconBreakUp.png";
+  if (s.includes("spd") || s.includes("speed"))
+    return "icon/property/IconSpeed.png";
+  if (s.includes("atk%")) return "icon/property/IconAttack.png";
+  if (s === "atk" || s.includes(" atk")) return "icon/property/IconAttack.png";
+  if (s.includes("def%")) return "icon/property/IconDefence.png";
+  if (s === "def" || s.includes(" def")) return "icon/property/IconDefence.png";
+  if (s.includes("hp%")) return "icon/property/IconMaxHP.png";
+  if (s === "hp" || s.includes(" hp")) return "icon/property/IconMaxHP.png";
+  return null;
+}
+
 // Helper to convert stat names into compact icon-like abbreviations
 function getStatAbbr(stat: string): string {
   const s = stat.toLowerCase();
@@ -180,6 +203,25 @@ function PropertyIcon({
       />
     </span>
   );
+}
+
+// Choose image icon when available; otherwise fallback to text icon
+function AnyStatIcon({
+  stat,
+  inverse = false,
+  size = "w-5 h-5",
+}: {
+  stat: string;
+  inverse?: boolean;
+  size?: string;
+}) {
+  const p = getStatIconPath(stat);
+  if (p) {
+    return (
+      <PropertyIcon icon={p} name={stat} field={stat} size={size} />
+    );
+  }
+  return <StatIcon stat={stat} inverse={inverse} size={size} />;
 }
 
 function HomePage() {
@@ -2005,15 +2047,19 @@ function ProfileDetail() {
                             RELICS &amp; PLANAR
                           </span>
                         </h5>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col grid-rows-6 sm:grid-rows-3 lg:grid-rows-2 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col grid-rows-6 sm:grid-rows-3 lg:grid-rows-2 gap-x-2 gap-y-6">
                           {[
                             ...selectedCharacter.cavityRelics,
                             ...selectedCharacter.planarRelics,
                           ].map((relic, index) => (
                             <div
                               key={index}
-                              className="bg-white border-2 border-black p-2"
+                              className="bg-white border-2 border-black p-2 pt-5 pb-4 relative"
                             >
+                              {/* Slot label centered on top border */}
+                              <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 bg-white px-2 leading-none inline-block whitespace-nowrap">
+                                <span className="font-black text-xs uppercase whitespace-nowrap">{relic.slot}</span>
+                              </div>
                               <div>
                                 <div className="flex items-start space-x-2">
                                   <div className="relative">
@@ -2030,37 +2076,31 @@ function ProfileDetail() {
                                   </div>
                                   <div className="flex-1 min-w-0">
                                     <div className="mb-1">
-                                      <div className="font-black text-xs uppercase text-black border-b border-black pb-0.5">
-                                        {relic.slot}
+                                      <div className="text-xs font-black text-white bg-black px-1.5 py-0.5 border border-black inline-flex items-center space-x-1">
+                                        <AnyStatIcon stat={relic.mainStat} inverse={true} size="w-4 h-4" />
+                                        <span>{relic.mainStatValue}</span>
                                       </div>
                                     </div>
-                                    <div
-                                      className="text-black leading-none mb-1"
-                                      aria-hidden="true"
-                                    >
-                                      {"★".repeat(relic.rarity ?? 5)}
-                                    </div>
                                   </div>
                                 </div>
-                                {/* Main Stat full-width bar */}
-                                <div className="mt-1">
-                                  <div className="text-xs font-black text-white bg-black px-2 py-0.5 border border-black w-full">
-                                    {relic.mainStat}: {relic.mainStatValue}
-                                  </div>
-                                </div>
-                                <div className="mt-2 space-y-0.5 w-full">
+                                {/* Main Stat moved next to icon above */}
+                                <div className="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 w-full">
                                   {relic.subStats.map((subStat, subIndex) => (
                                     <div
                                       key={subIndex}
-                                      className="text-xs font-bold text-black flex justify-between"
+                                      className="text-xs font-bold text-black flex items-center justify-between"
                                     >
-                                      <span>• {subStat.stat}</span>
-                                      <span className="font-black">
-                                        {subStat.value}
+                                      <span className="flex items-center space-x-1">
+                                        <AnyStatIcon stat={subStat.stat} size="w-5 h-5" inverse={true} />
                                       </span>
+                                      <span className="font-black">{subStat.value}</span>
                                     </div>
                                   ))}
                                 </div>
+                              </div>
+                              {/* Rarity stars centered on bottom border of card */}
+                              <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform" aria-hidden="true">
+                                <span className="text-black text-xs">{"★".repeat(relic.rarity ?? 5)}</span>
                               </div>
                             </div>
                           ))}
