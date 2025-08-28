@@ -140,7 +140,8 @@ function getElementDmgIcon(element: string): string | null {
   if (e.includes("wind")) return "icon/property/IconWindAddedRatio.png";
   if (e.includes("physical")) return "icon/property/IconPhysicalAddedRatio.png";
   if (e.includes("quantum")) return "icon/property/IconQuantumAddedRatio.png";
-  if (e.includes("imaginary")) return "icon/property/IconImaginaryAddedRatio.png";
+  if (e.includes("imaginary"))
+    return "icon/property/IconImaginaryAddedRatio.png";
   if (e.includes("thunder") || e.includes("lightning"))
     return "icon/property/IconThunderAddedRatio.png";
   return null;
@@ -236,6 +237,66 @@ function AnyStatIcon({
     return <PropertyIcon icon={p} name={stat} field={stat} size={size} />;
   }
   return <StatIcon stat={stat} inverse={inverse} size={size} />;
+}
+
+// Build light cone attributes from provided attributes or fallback to stats/placeholder
+function buildLightConeAttributes(lc: {
+  attributes?: {
+    field: string;
+    name: string;
+    icon: string;
+    value?: number | string;
+    display?: string | number;
+    percent?: boolean;
+  }[];
+  stats?: { hp?: number; atk?: number; def?: number };
+}) {
+  if (lc.attributes && lc.attributes.length > 0) {
+    // Normalize: ensure display populated using value when missing
+    return lc.attributes.map((a) => ({
+      ...a,
+      display:
+        a.display !== undefined && a.display !== null && a.display !== ""
+          ? String(a.display)
+          : a.value !== undefined && a.value !== null
+          ? (() => {
+              const num = Number(a.value);
+              if (Number.isFinite(num)) {
+                return a.percent
+                  ? `${num.toFixed(1)}%`
+                  : String(Math.round(num));
+              }
+              return String(a.value);
+            })()
+          : "—",
+    }));
+  }
+  const hp = lc.stats?.hp != null ? String(lc.stats.hp) : "—";
+  const atk = lc.stats?.atk != null ? String(lc.stats.atk) : "—";
+  const def = lc.stats?.def != null ? String(lc.stats.def) : "—";
+  return [
+    {
+      field: "hp",
+      name: "Base HP",
+      icon: "icon/property/IconMaxHP.png",
+      display: hp,
+      percent: false,
+    },
+    {
+      field: "atk",
+      name: "Base ATK",
+      icon: "icon/property/IconAttack.png",
+      display: atk,
+      percent: false,
+    },
+    {
+      field: "def",
+      name: "Base DEF",
+      icon: "icon/property/IconDefence.png",
+      display: def,
+      percent: false,
+    },
+  ];
 }
 
 function HomePage() {
@@ -563,6 +624,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
         rarity: 5,
         path: "Hunt",
+        stats: { hp: 1270, atk: 582, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1270,
+            display: "1270",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 582,
+            display: "582",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -704,6 +792,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23002.png",
         rarity: 5,
         path: "Erudition",
+        stats: { hp: 1164, atk: 582, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1164,
+            display: "1164",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 582,
+            display: "582",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -845,6 +960,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23001.png",
         rarity: 5,
         path: "Nihility",
+        stats: { hp: 1058, atk: 529, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1058,
+            display: "1058",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 529,
+            display: "529",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -986,6 +1128,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23042.png",
         rarity: 5,
         path: "Nihility",
+        stats: { hp: 1058, atk: 529, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1058,
+            display: "1058",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 529,
+            display: "529",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -1127,6 +1296,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21004.png",
         rarity: 5,
         path: "Nihility",
+        stats: { hp: 1058, atk: 529, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1058,
+            display: "1058",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 529,
+            display: "529",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -1268,6 +1464,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
         rarity: 5,
         path: "Hunt",
+        stats: { hp: 1270, atk: 582, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1270,
+            display: "1270",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 582,
+            display: "582",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -1409,6 +1632,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23004.png",
         rarity: 5,
         path: "Harmony",
+        stats: { hp: 1058, atk: 529, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1058,
+            display: "1058",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 529,
+            display: "529",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -1757,7 +2007,7 @@ function ProfileDetail() {
                   <div className="border-2 border-black p-4 bg-white relative z-30">
                     <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start justify-between">
                       {/* Character Info */}
-                      <div className="w-full lg:w-[300px]">
+                      <div className="w-full lg:w-[320px]">
                         <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
                           {/* Left: Portrait with centered bottom stars */}
                           <div className="flex flex-col items-center">
@@ -1824,7 +2074,7 @@ function ProfileDetail() {
                             <img
                               src={selectedCharacter.lightCone.icon}
                               alt={selectedCharacter.lightCone.name}
-                              className="w-20 h-20 object-cover border-2 border-black"
+                              className="w-24 h-24 object-cover border-2 border-black"
                             />
                             <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
                               {selectedCharacter.lightCone.superimposition}
@@ -1846,13 +2096,14 @@ function ProfileDetail() {
                             <div className="font-mono">
                               Level: {selectedCharacter.lightCone.level}
                             </div>
-                            {selectedCharacter.lightCone.attributes &&
-                            selectedCharacter.lightCone.attributes.length >
-                              0 ? (
-                              <div className="bg-white border-2 border-black p-2 mt-2">
-                                <div className="grid grid-cols-3 gap-2 text-xs">
-                                  {selectedCharacter.lightCone.attributes.map(
-                                    (attr, idx) => (
+                            {(() => {
+                              const attrs = buildLightConeAttributes(
+                                selectedCharacter.lightCone
+                              );
+                              return (
+                                <div className="bg-white border-2 border-black p-2 mt-2">
+                                  <div className="grid grid-cols-3 gap-2 text-xs">
+                                    {attrs.map((attr, idx) => (
                                       <div
                                         key={idx}
                                         className="flex items-center justify-between"
@@ -1867,42 +2118,11 @@ function ProfileDetail() {
                                           {attr.display}
                                         </span>
                                       </div>
-                                    )
-                                  )}
-                                </div>
-                              </div>
-                            ) : (
-                              selectedCharacter.lightCone.stats && (
-                                <div className="bg-white border-2 border-black p-2 mt-2">
-                                  <div className="grid grid-cols-3 gap-2 text-xs">
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">
-                                        HP:
-                                      </span>
-                                      <span className="font-mono font-black">
-                                        {selectedCharacter.lightCone.stats.hp}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">
-                                        ATK:
-                                      </span>
-                                      <span className="font-mono font-black">
-                                        {selectedCharacter.lightCone.stats.atk}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-bold text-gray-700">
-                                        DEF:
-                                      </span>
-                                      <span className="font-mono font-black">
-                                        {selectedCharacter.lightCone.stats.def}
-                                      </span>
-                                    </div>
+                                    ))}
                                   </div>
                                 </div>
-                              )
-                            )}
+                              );
+                            })()}
                           </div>
                         </div>
                       </div>
@@ -1920,7 +2140,11 @@ function ProfileDetail() {
                             <div className="grid grid-cols-1 gap-y-1">
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="HP" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="HP"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>HP:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1929,7 +2153,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="ATK" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="ATK"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>ATK:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1938,7 +2166,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="DEF" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="DEF"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>DEF:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1947,7 +2179,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="SPD" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="SPD"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>SPD:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1956,7 +2192,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="CRIT Rate" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="CRIT Rate"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>CRIT Rate:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1965,7 +2205,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="CRIT DMG" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="CRIT DMG"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>CRIT DMG:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1974,7 +2218,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="Effect Hit" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="Effect Hit"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>Effect Hit:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1983,7 +2231,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="Effect RES" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="Effect RES"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>Effect RES:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -1993,7 +2245,9 @@ function ProfileDetail() {
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
                                   {(() => {
-                                    const icon = getElementDmgIcon(selectedCharacter.element);
+                                    const icon = getElementDmgIcon(
+                                      selectedCharacter.element
+                                    );
                                     return icon ? (
                                       <PropertyIcon
                                         icon={icon}
@@ -2002,7 +2256,11 @@ function ProfileDetail() {
                                         size="w-5 h-5"
                                       />
                                     ) : (
-                                      <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
+                                      <AnyStatIcon
+                                        stat="DMG"
+                                        inverse
+                                        size="w-5 h-5"
+                                      />
                                     );
                                   })()}
                                   <span>{selectedCharacter.element} DMG:</span>
@@ -2013,7 +2271,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2">
-                                  <AnyStatIcon stat="Break Effect" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="Break Effect"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>Break Effect:</span>
                                 </span>
                                 <span className="font-mono font-black">
@@ -2022,7 +2284,11 @@ function ProfileDetail() {
                               </div>
                               <div className="flex justify-between items-center">
                                 <span className="font-bold text-gray-700 flex items-center gap-2 whitespace-nowrap">
-                                  <AnyStatIcon stat="Energy Regen" inverse size="w-5 h-5" />
+                                  <AnyStatIcon
+                                    stat="Energy Regen"
+                                    inverse
+                                    size="w-5 h-5"
+                                  />
                                   <span>Energy Regen:</span>
                                 </span>
                                 <span className="font-mono font-black">
