@@ -1570,9 +1570,6 @@ function ProfileDetail() {
 
             {activeTab === "characters" && (
               <div className="relative">
-                <h3 className="text-xl font-bold text-black mb-4 uppercase tracking-wide">
-                  CHARACTER ROSTER
-                </h3>
                 <div className="flex flex-wrap gap-0 mb-0 relative top-1">
                   {characters.map((character, index) => (
                     <button
@@ -1592,63 +1589,55 @@ function ProfileDetail() {
                   <div className="border-2 border-black p-4 bg-white relative z-30">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-x-3">
                       {/* Character Info */}
-                      <div className="lg:col-span-4 flex flex-col items-center">
-                        <img
-                          src={selectedCharacter.portrait}
-                          alt={selectedCharacter.name}
-                          className="w-32 h-32 object-cover border-2 border-black mb-3"
-                        />
-                        <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
-                          <span className="transform skew-x-12 inline-block">
-                            {selectedCharacter.name}
-                          </span>
-                        </h4>
-                        <div
-                          className="mt-2"
-                          title={`${selectedCharacter.rarity}-Star`}
-                        >
-                          <span
-                            className="text-black text-base md:text-lg leading-none"
-                            aria-hidden="true"
-                          >
-                            {"★".repeat(selectedCharacter.rarity)}
-                          </span>
-                          <span className="sr-only">
-                            {selectedCharacter.rarity}-Star
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 text-sm mt-3 w-full">
-                          <div className="text-center">
-                            <span className="font-bold block text-xs">
-                              ELEMENT
-                            </span>
-                            <span className="font-mono">
-                              {selectedCharacter.element}
-                            </span>
+                      <div className="lg:col-span-4">
+                        <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
+                          {/* Left: Portrait only */}
+                          <div className="flex flex-col items-center">
+                            <img
+                              src={selectedCharacter.portrait}
+                              alt={selectedCharacter.name}
+                              className="w-32 h-32 object-cover border-2 border-black mb-3"
+                            />
                           </div>
-                          <div className="text-center">
-                            <span className="font-bold block text-xs">
-                              PATH
-                            </span>
-                            <span className="font-mono">
-                              {selectedCharacter.path}
-                            </span>
-                          </div>
-                          <div className="text-center">
-                            <span className="font-bold block text-xs">
-                              LEVEL
-                            </span>
-                            <span className="font-mono">
-                              {selectedCharacter.level}
-                            </span>
-                          </div>
-                          <div className="text-center">
-                            <span className="font-bold block text-xs">
-                              EIDOLON
-                            </span>
-                            <span className="font-mono">
-                              E{selectedCharacter.eidolon}
-                            </span>
+
+                          {/* Right: Character info text beside image */}
+                          <div className="mt-3 md:mt-0 md:flex-1">
+                            <div className="text-left space-y-2">
+                              <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
+                                <span className="transform skew-x-12 inline-block">
+                                  {selectedCharacter.name}
+                                </span>
+                              </h4>
+                              <div title={`${selectedCharacter.rarity}-Star`}>
+                                <span
+                                  className="text-black text-base md:text-lg leading-none"
+                                  aria-hidden="true"
+                                >
+                                  {"★".repeat(selectedCharacter.rarity)}
+                                </span>
+                                <span className="sr-only">
+                                  {selectedCharacter.rarity}-Star
+                                </span>
+                              </div>
+                            </div>
+                            <div className="mt-2 text-sm w-full space-y-1 text-left">
+                              <div className="font-mono">
+                                <span className="font-bold">Element</span> :{" "}
+                                {selectedCharacter.element}
+                              </div>
+                              <div className="font-mono">
+                                <span className="font-bold">Path</span> :{" "}
+                                {selectedCharacter.path}
+                              </div>
+                              <div className="font-mono">
+                                <span className="font-bold">Level</span> :{" "}
+                                {selectedCharacter.level}
+                              </div>
+                              <div className="font-mono">
+                                <span className="font-bold">Eidolon Level</span>{" "}
+                                : {selectedCharacter.eidolon}
+                              </div>
+                            </div>
                           </div>
                         </div>
 
@@ -1871,7 +1860,7 @@ function ProfileDetail() {
                             RELICS &amp; PLANAR
                           </span>
                         </h5>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col grid-rows-6 sm:grid-rows-3 lg:grid-rows-2 gap-2">
                           {[
                             ...selectedCharacter.cavityRelics,
                             ...selectedCharacter.planarRelics,
@@ -1914,7 +1903,9 @@ function ProfileDetail() {
                                       className="text-xs font-bold text-black flex justify-between"
                                     >
                                       <span>• {subStat.stat}</span>
-                                      <span className="font-black">{subStat.value}</span>
+                                      <span className="font-black">
+                                        {subStat.value}
+                                      </span>
                                     </div>
                                   ))}
                                 </div>
