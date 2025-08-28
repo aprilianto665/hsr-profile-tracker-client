@@ -112,6 +112,17 @@ const STAR_RAIL_RES_BASE =
 // Map stat names to property icon relative paths under STAR_RAIL_RES_BASE
 function getStatIconPath(stat: string): string | null {
   const s = stat.toLowerCase();
+  // Elemental DMG% on Body piece
+  if (s.includes("wind dmg")) return "icon/property/IconWindAddedRatio.png";
+  if (s.includes("fire dmg")) return "icon/property/IconFireAddedRatio.png";
+  if (s.includes("ice dmg")) return "icon/property/IconIceAddedRatio.png";
+  if (s.includes("lightning dmg") || s.includes("thunder dmg"))
+    return "icon/property/IconThunderAddedRatio.png";
+  if (s.includes("imaginary dmg"))
+    return "icon/property/IconImaginaryAddedRatio.png";
+  if (s.includes("quantum dmg")) return "icon/property/IconQuantumAddedRatio.png";
+  if (s.includes("physical dmg"))
+    return "icon/property/IconPhysicalAddedRatio.png";
   if (s.includes("crit dmg")) return "icon/property/IconCriticalDamage.png";
   if (s.includes("crit rate")) return "icon/property/IconCriticalChance.png";
   if (s.includes("energy") && s.includes("regen"))
