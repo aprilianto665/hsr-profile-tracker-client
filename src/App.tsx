@@ -44,6 +44,7 @@ interface Relic {
   icon: string;
   slot: string;
   subStats: { stat: string; value: string }[];
+  rarity?: number; // optional; default display 5 if absent
 }
 
 interface RelicSetEffect {
@@ -85,6 +86,15 @@ interface Character {
     icon: string;
     rarity: number;
     path: string;
+    stats?: { hp: number; atk: number; def: number };
+    attributes?: {
+      field: string;
+      name: string;
+      icon: string; // relative path under STAR_RAIL_RES_BASE
+      value: number;
+      display: string;
+      percent: boolean;
+    }[];
   };
   cavityRelics: Relic[];
   planarRelics: Relic[];
@@ -93,6 +103,83 @@ interface Character {
 
 interface ProfileData {
   player: Player;
+}
+
+// Base URL for StarRailRes assets
+const STAR_RAIL_RES_BASE =
+  "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
+
+// Helper to convert stat names into compact icon-like abbreviations
+function getStatAbbr(stat: string): string {
+  const s = stat.toLowerCase();
+  if (s.includes("crit dmg")) return "CD%";
+  if (s.includes("crit rate")) return "CR%";
+  if (s.includes("energy regen")) return "ERR%";
+  if (s.includes("effect res")) return "RES%";
+  if (s.includes("effect hit")) return "EHR%";
+  if (s.includes("break effect")) return "BE%";
+  if (s.includes("atk%")) return "ATK%";
+  if (s === "atk") return "ATK";
+  if (s.includes("def%")) return "DEF%";
+  if (s === "def") return "DEF";
+  if (s.includes("hp%")) return "HP%";
+  if (s === "hp") return "HP";
+  if (s.includes("spd")) return "SPD";
+  if (s.includes("dmg") && s.includes("%")) return "DMG%";
+  return stat.toUpperCase();
+}
+
+function StatIcon({
+  stat,
+  inverse = false,
+  size = "w-6 h-6",
+}: {
+  stat: string;
+  inverse?: boolean;
+  size?: string;
+}) {
+  const abbr = getStatAbbr(stat);
+  const base = "inline-flex items-center justify-center align-middle";
+  const style = inverse ? "text-white border-white" : "text-black border-black";
+  return (
+    <span
+      className={`${base} ${size} ${style} font-black text-[10px] leading-none border bg-white ${
+        inverse ? "bg-black" : "bg-white"
+      }`}
+      title={stat}
+    >
+      {abbr}
+    </span>
+  );
+}
+
+// Image icon for attributes with safe fallback to StatIcon when load fails
+function PropertyIcon({
+  icon,
+  name,
+  field,
+  size = "w-5 h-5",
+}: {
+  icon: string;
+  name: string;
+  field: string;
+  size?: string;
+}) {
+  const [failed, setFailed] = React.useState(false);
+  if (failed) {
+    return <StatIcon stat={field} size={size} inverse={true} />;
+  }
+  const normalized = icon.startsWith("/") ? icon.slice(1) : icon;
+  return (
+    <span className={`${size} inline-flex items-center justify-center bg-black border border-black`}>
+      <img
+        src={`${STAR_RAIL_RES_BASE}${normalized}`}
+        alt={name}
+        className="w-4 h-4"
+        onError={() => setFailed(true)}
+      />
+    </span>
+  );
 }
 
 function HomePage() {
@@ -252,6 +339,33 @@ function ProfileDetail() {
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23003.png",
         rarity: 4,
         path: "Preservation",
+        stats: { hp: 1164, atk: 476, def: 396 },
+        attributes: [
+          {
+            field: "hp",
+            name: "Base HP",
+            icon: "icon/property/IconMaxHP.png",
+            value: 1164,
+            display: "1164",
+            percent: false,
+          },
+          {
+            field: "atk",
+            name: "Base ATK",
+            icon: "icon/property/IconAttack.png",
+            value: 476,
+            display: "476",
+            percent: false,
+          },
+          {
+            field: "def",
+            name: "Base DEF",
+            icon: "icon/property/IconDefence.png",
+            value: 396,
+            display: "396",
+            percent: false,
+          },
+        ],
       },
       cavityRelics: [
         {
@@ -1591,13 +1705,24 @@ function ProfileDetail() {
                       {/* Character Info */}
                       <div className="lg:col-span-4">
                         <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
-                          {/* Left: Portrait only */}
+                          {/* Left: Portrait with centered bottom stars */}
                           <div className="flex flex-col items-center">
-                            <img
-                              src={selectedCharacter.portrait}
-                              alt={selectedCharacter.name}
-                              className="w-32 h-32 object-cover border-2 border-black mb-3"
-                            />
+                            <div className="relative inline-block mb-4">
+                              <img
+                                src={selectedCharacter.portrait}
+                                alt={selectedCharacter.name}
+                                className="w-32 h-32 object-cover border-2 border-black"
+                              />
+                              <div
+                                className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform"
+                                title={`${selectedCharacter.rarity}-Star`}
+                              >
+                                <span className="text-black text-xs md:text-sm" aria-hidden="true">
+                                  {"★".repeat(selectedCharacter.rarity)}
+                                </span>
+                                <span className="sr-only">{selectedCharacter.rarity}-Star</span>
+                              </div>
+                            </div>
                           </div>
 
                           {/* Right: Character info text beside image */}
@@ -1608,17 +1733,6 @@ function ProfileDetail() {
                                   {selectedCharacter.name}
                                 </span>
                               </h4>
-                              <div title={`${selectedCharacter.rarity}-Star`}>
-                                <span
-                                  className="text-black text-base md:text-lg leading-none"
-                                  aria-hidden="true"
-                                >
-                                  {"★".repeat(selectedCharacter.rarity)}
-                                </span>
-                                <span className="sr-only">
-                                  {selectedCharacter.rarity}-Star
-                                </span>
-                              </div>
                             </div>
                             <div className="mt-2 text-sm w-full space-y-1 text-left">
                               <div className="font-mono">
@@ -1761,23 +1875,54 @@ function ProfileDetail() {
                             <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
                               {selectedCharacter.lightCone.superimposition}
                             </div>
+                            {/* Stars centered on bottom border of light cone image */}
+                            <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform" aria-hidden="true">
+                              <span className="text-black text-xs md:text-sm">
+                                {"★".repeat(selectedCharacter.lightCone.rarity)}
+                              </span>
+                            </div>
                           </div>
                           <div className="text-sm">
                             <div className="font-mono font-bold break-words mb-1">
                               {selectedCharacter.lightCone.name}
                             </div>
-                            <div
-                              className="text-black leading-none mb-1"
-                              aria-hidden="true"
-                            >
-                              {"★".repeat(selectedCharacter.lightCone.rarity)}
-                            </div>
-                            <div className="font-mono mb-0.5">
-                              Path: {selectedCharacter.lightCone.path}
-                            </div>
-                            <div className="font-mono">
-                              Level: {selectedCharacter.lightCone.level}
-                            </div>
+                            <div className="font-mono">Level: {selectedCharacter.lightCone.level}</div>
+                            {selectedCharacter.lightCone.attributes && selectedCharacter.lightCone.attributes.length > 0 ? (
+                              <div className="bg-white border-2 border-black p-2 mt-2">
+                                <div className="grid grid-cols-3 gap-2 text-xs">
+                                  {selectedCharacter.lightCone.attributes.map((attr, idx) => (
+                                    <div key={idx} className="flex items-center justify-between">
+                                      {React.createElement(PropertyIcon, {
+                                        icon: attr.icon,
+                                        name: attr.name,
+                                        field: attr.field,
+                                        size: "w-5 h-5",
+                                      })}
+                                      <span className="font-mono font-black ml-2">{attr.display}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              selectedCharacter.lightCone.stats && (
+                                <div className="bg-white border-2 border-black p-2 mt-2">
+                                  <div className="grid grid-cols-3 gap-2 text-xs">
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-bold text-gray-700">HP:</span>
+                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.hp}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-bold text-gray-700">ATK:</span>
+                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.atk}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-bold text-gray-700">DEF:</span>
+                                      <span className="font-mono font-black">{selectedCharacter.lightCone.stats.def}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )
+                            )}
                           </div>
                         </div>
 
@@ -1889,11 +2034,18 @@ function ProfileDetail() {
                                         {relic.slot}
                                       </div>
                                     </div>
-                                    <div className="mb-1">
-                                      <div className="text-xs font-black text-white bg-black px-1 py-0.5 border border-black inline-block">
-                                        {relic.mainStat}: {relic.mainStatValue}
-                                      </div>
+                                    <div
+                                      className="text-black leading-none mb-1"
+                                      aria-hidden="true"
+                                    >
+                                      {"★".repeat(relic.rarity ?? 5)}
                                     </div>
+                                  </div>
+                                </div>
+                                {/* Main Stat full-width bar */}
+                                <div className="mt-1">
+                                  <div className="text-xs font-black text-white bg-black px-2 py-0.5 border border-black w-full">
+                                    {relic.mainStat}: {relic.mainStatValue}
                                   </div>
                                 </div>
                                 <div className="mt-2 space-y-0.5 w-full">
