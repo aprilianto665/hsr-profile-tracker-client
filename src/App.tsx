@@ -83,6 +83,8 @@ interface Character {
     level: number;
     superimposition: number;
     icon: string;
+    rarity: number;
+    path: string;
   };
   cavityRelics: Relic[];
   planarRelics: Relic[];
@@ -248,6 +250,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 5,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23003.png",
+        rarity: 4,
+        path: "Preservation",
       },
       cavityRelics: [
         {
@@ -387,6 +391,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
+        rarity: 5,
+        path: "Hunt",
       },
       cavityRelics: [
         {
@@ -526,6 +532,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23002.png",
+        rarity: 5,
+        path: "Erudition",
       },
       cavityRelics: [
         {
@@ -665,6 +673,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23001.png",
+        rarity: 5,
+        path: "Nihility",
       },
       cavityRelics: [
         {
@@ -804,6 +814,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23042.png",
+        rarity: 5,
+        path: "Nihility",
       },
       cavityRelics: [
         {
@@ -943,6 +955,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 3,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21004.png",
+        rarity: 5,
+        path: "Nihility",
       },
       cavityRelics: [
         {
@@ -1082,6 +1096,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/21001.png",
+        rarity: 5,
+        path: "Hunt",
       },
       cavityRelics: [
         {
@@ -1221,6 +1237,8 @@ function ProfileDetail() {
         level: 80,
         superimposition: 1,
         icon: "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/light_cone/23004.png",
+        rarity: 5,
+        path: "Harmony",
       },
       cavityRelics: [
         {
@@ -1749,6 +1767,12 @@ function ProfileDetail() {
                           <div className="text-sm">
                             <div className="font-mono font-bold break-words mb-1">
                               {selectedCharacter.lightCone.name}
+                            </div>
+                            <div className="text-black leading-none mb-1" aria-hidden="true">
+                              {"★".repeat(selectedCharacter.lightCone.rarity)}
+                            </div>
+                            <div className="font-mono mb-0.5">
+                              Path: {selectedCharacter.lightCone.path}
                             </div>
                             <div className="font-mono">
                               Level: {selectedCharacter.lightCone.level}
