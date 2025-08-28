@@ -1590,9 +1590,9 @@ function ProfileDetail() {
                 </div>
                 {selectedCharacter && (
                   <div className="border-2 border-black p-4 bg-white relative z-30">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-x-3">
                       {/* Character Info */}
-                      <div className="lg:col-span-3 flex flex-col items-center">
+                      <div className="lg:col-span-4 flex flex-col items-center">
                         <img
                           src={selectedCharacter.portrait}
                           alt={selectedCharacter.name}
@@ -1603,11 +1603,19 @@ function ProfileDetail() {
                             {selectedCharacter.name}
                           </span>
                         </h4>
-                        <div className="mt-2" title={`${selectedCharacter.rarity}-Star`}>
-                          <span className="text-black text-base md:text-lg leading-none" aria-hidden="true">
+                        <div
+                          className="mt-2"
+                          title={`${selectedCharacter.rarity}-Star`}
+                        >
+                          <span
+                            className="text-black text-base md:text-lg leading-none"
+                            aria-hidden="true"
+                          >
                             {"★".repeat(selectedCharacter.rarity)}
                           </span>
-                          <span className="sr-only">{selectedCharacter.rarity}-Star</span>
+                          <span className="sr-only">
+                            {selectedCharacter.rarity}-Star
+                          </span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-sm mt-3 w-full">
                           <div className="text-center">
@@ -1643,104 +1651,105 @@ function ProfileDetail() {
                             </span>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Stats */}
-                      <div className="lg:col-span-3">
-                        <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                          <span className="transform skew-x-12 inline-block">
-                            STATS
-                          </span>
-                        </h5>
-                        <div className="bg-white border-2 border-black p-3 relative text-sm">
-                          <div className="grid grid-cols-1 gap-y-1">
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                HP:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.baseHp}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                ATK:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.baseAtk}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                DEF:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.baseDef}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                SPD:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.spd}
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                CRIT Rate:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.critRate}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                CRIT DMG:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.critDmg}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                Effect Hit:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.effectHitRate}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                Effect RES:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.effectRes}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                {selectedCharacter.element} DMG:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.elementDmg}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                Break Effect:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.breakEffect}%
-                              </span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="font-bold text-gray-700">
-                                Energy Regen:
-                              </span>
-                              <span className="font-mono font-black">
-                                {selectedCharacter.stats.energyRegenRate}%
-                              </span>
+                        {/* Stats */}
+                        <div className="w-full mt-2">
+                          <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+                            <span className="transform skew-x-12 inline-block">
+                              STATS
+                            </span>
+                          </h5>
+                          <div className="bg-white border-2 border-black p-3 relative text-sm">
+                            <div className="grid grid-cols-2 gap-x-6 gap-y-1 relative">
+                              <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-black"></div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  HP:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseHp}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  ATK:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseAtk}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  DEF:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.baseDef}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  SPD:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.spd}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  CRIT Rate:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.critRate}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  CRIT DMG:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.critDmg}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  Effect Hit:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.effectHitRate}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  Effect RES:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.effectRes}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  {selectedCharacter.element} DMG:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.elementDmg}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700">
+                                  Break Effect:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.breakEffect}%
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="font-bold text-gray-700 whitespace-nowrap">
+                                  Energy Regen:
+                                </span>
+                                <span className="font-mono font-black">
+                                  {selectedCharacter.stats.energyRegenRate}%
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1768,7 +1777,10 @@ function ProfileDetail() {
                             <div className="font-mono font-bold break-words mb-1">
                               {selectedCharacter.lightCone.name}
                             </div>
-                            <div className="text-black leading-none mb-1" aria-hidden="true">
+                            <div
+                              className="text-black leading-none mb-1"
+                              aria-hidden="true"
+                            >
                               {"★".repeat(selectedCharacter.lightCone.rarity)}
                             </div>
                             <div className="font-mono mb-0.5">
@@ -1785,12 +1797,13 @@ function ProfileDetail() {
                             SET EFFECTS
                           </span>
                         </h5>
-                        <div className="space-y-2">
-                          {selectedCharacter.relicSetEffects?.map(
-                            (setEffect, index) => (
+                        <div className="grid grid-cols-1 gap-2">
+                          {selectedCharacter.relicSetEffects
+                            ?.filter((se) => !se.icon.includes("/relic/3"))
+                            .map((setEffect, index) => (
                               <div
-                                key={index}
-                                className="bg-white border-2 border-black p-2"
+                                key={`relic-${index}`}
+                                className="bg-white border-2 border-black p-2 h-full"
                               >
                                 <div className="flex items-center mb-1">
                                   <div className="relative mr-2">
@@ -1811,25 +1824,63 @@ function ProfileDetail() {
                                   {setEffect.effect}
                                 </div>
                               </div>
-                            )
+                            ))}
+
+                          {selectedCharacter.relicSetEffects?.some((se) =>
+                            se.icon.includes("/relic/3")
+                          ) && (
+                            <div className="space-y-2">
+                              {selectedCharacter.relicSetEffects
+                                ?.filter((se) => se.icon.includes("/relic/3"))
+                                .map((setEffect, index) => (
+                                  <div
+                                    key={`planar-${index}`}
+                                    className="bg-white border-2 border-black p-2"
+                                  >
+                                    <div className="flex items-center mb-1">
+                                      <div className="relative mr-2">
+                                        <img
+                                          src={setEffect.icon}
+                                          alt={setEffect.setName}
+                                          className="w-8 h-8 object-cover border border-black"
+                                        />
+                                        <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
+                                          {setEffect.pieces}
+                                        </div>
+                                      </div>
+                                      <div className="font-bold text-xs uppercase">
+                                        {setEffect.setName}
+                                      </div>
+                                    </div>
+                                    <div className="text-xs font-mono leading-tight">
+                                      {setEffect.effect}
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
                           )}
                         </div>
                       </div>
 
-                      {/* Relics */}
-                      <div className="lg:col-span-3">
+                      {/* Set Effects moved into Light Cone section above */}
+
+                      {/* Relics & Planar - combined section, 3-column cards */}
+                      <div className="lg:col-span-5 lg:col-start-8 lg:row-start-1">
                         <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
                           <span className="transform skew-x-12 inline-block">
-                            RELICS
+                            RELICS &amp; PLANAR
                           </span>
                         </h5>
-                        <div className="grid grid-cols-2 gap-2">
-                          {selectedCharacter.cavityRelics.map(
-                            (relic, index) => (
-                              <div
-                                key={index}
-                                className="bg-white border-2 border-black p-2"
-                              >
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                          {[
+                            ...selectedCharacter.cavityRelics,
+                            ...selectedCharacter.planarRelics,
+                          ].map((relic, index) => (
+                            <div
+                              key={index}
+                              className="bg-white border-2 border-black p-2"
+                            >
+                              <div>
                                 <div className="flex items-start space-x-2">
                                   <div className="relative">
                                     <div className="w-10 h-10 border border-black bg-white flex items-center justify-center">
@@ -1854,78 +1905,26 @@ function ProfileDetail() {
                                         {relic.mainStat}: {relic.mainStatValue}
                                       </div>
                                     </div>
-                                    <div className="space-y-0.5">
-                                      {relic.subStats.map(
-                                        (subStat, subIndex) => (
-                                          <div
-                                            key={subIndex}
-                                            className="text-xs font-bold text-black flex justify-between"
-                                          >
-                                            <span>• {subStat.stat}</span>
-                                            <span className="font-black">
-                                              {subStat.value}
-                                            </span>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )
-                          )}
-                          {selectedCharacter.planarRelics.map(
-                            (relic, index) => (
-                              <div
-                                key={index}
-                                className="bg-white border-2 border-black p-2"
-                              >
-                                <div className="flex items-start space-x-2">
-                                  <div className="relative">
-                                    <div className="w-10 h-10 border border-black bg-white flex items-center justify-center">
-                                      <img
-                                        src={relic.icon}
-                                        alt={relic.name}
-                                        className="w-8 h-8 object-cover"
-                                      />
+                                <div className="mt-2 space-y-0.5 w-full">
+                                  {relic.subStats.map((subStat, subIndex) => (
+                                    <div
+                                      key={subIndex}
+                                      className="text-xs font-bold text-black flex justify-between"
+                                    >
+                                      <span>• {subStat.stat}</span>
+                                      <span className="font-black">{subStat.value}</span>
                                     </div>
-                                    <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
-                                      {relic.level}
-                                    </div>
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="mb-1">
-                                      <div className="font-black text-xs uppercase text-black border-b border-black pb-0.5">
-                                        {relic.slot}
-                                      </div>
-                                    </div>
-                                    <div className="mb-1">
-                                      <div className="text-xs font-black text-white bg-black px-1 py-0.5 border border-black inline-block">
-                                        {relic.mainStat}: {relic.mainStatValue}
-                                      </div>
-                                    </div>
-                                    <div className="space-y-0.5">
-                                      {relic.subStats.map(
-                                        (subStat, subIndex) => (
-                                          <div
-                                            key={subIndex}
-                                            className="text-xs font-bold text-black flex justify-between"
-                                          >
-                                            <span>• {subStat.stat}</span>
-                                            <span className="font-black">
-                                              {subStat.value}
-                                            </span>
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  </div>
+                                  ))}
                                 </div>
                               </div>
-                            )
-                          )}
+                            </div>
+                          ))}
                         </div>
                       </div>
+
+                      {/* Planar Relics removed; now grouped with Relics in right column above */}
                     </div>
                   </div>
                 )}
