@@ -120,7 +120,8 @@ function getStatIconPath(stat: string): string | null {
     return "icon/property/IconThunderAddedRatio.png";
   if (s.includes("imaginary dmg"))
     return "icon/property/IconImaginaryAddedRatio.png";
-  if (s.includes("quantum dmg")) return "icon/property/IconQuantumAddedRatio.png";
+  if (s.includes("quantum dmg"))
+    return "icon/property/IconQuantumAddedRatio.png";
   if (s.includes("physical dmg"))
     return "icon/property/IconPhysicalAddedRatio.png";
   if (s.includes("crit dmg")) return "icon/property/IconCriticalDamage.png";
@@ -248,6 +249,45 @@ function AnyStatIcon({
     return <PropertyIcon icon={p} name={stat} field={stat} size={size} />;
   }
   return <StatIcon stat={stat} inverse={inverse} size={size} />;
+}
+
+// -------- Relic Score helpers --------
+function parseNumber(value: string): number {
+  if (!value) return 0;
+  const cleaned = String(value).replace(/[^0-9.\-]/g, "");
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function computeRelicScore(relic: {
+  subStats: { stat: string; value: string }[];
+}): number {
+  let score = 0;
+  for (const s of relic.subStats) {
+    const name = s.stat.toLowerCase();
+    const val = parseNumber(s.value);
+    if (name.includes("crit rate")) score += 2 * val;
+    else if (name.includes("crit dmg")) score += val;
+    else if (name.includes("spd")) score += val; // light weight for SPD
+  }
+  return score;
+}
+
+function computeRelicEff(relic: {
+  subStats: { stat: string; value: string }[];
+}): number {
+  const targets = ["crit rate", "crit dmg", "spd"];
+  return relic.subStats.filter((s) =>
+    targets.some((t) => s.stat.toLowerCase().includes(t))
+  ).length;
+}
+
+function computeRelicRank(score: number): string {
+  if (score >= 38) return "SS";
+  if (score >= 30) return "S";
+  if (score >= 24) return "A";
+  if (score >= 20) return "B";
+  return "C";
 }
 
 // Build light cone attributes from provided attributes or fallback to stats/placeholder
@@ -2372,11 +2412,11 @@ function ProfileDetail() {
                               <div>
                                 <div className="flex items-start space-x-2">
                                   <div className="relative">
-                                    <div className="w-10 h-10 border border-black bg-white flex items-center justify-center">
+                                    <div className="w-14 h-14 border border-black bg-white flex items-center justify-center">
                                       <img
                                         src={relic.icon}
                                         alt={relic.name}
-                                        className="w-8 h-8 object-cover"
+                                        className="w-12 h-12 object-cover"
                                       />
                                     </div>
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-xs px-1 font-black">
@@ -2393,6 +2433,29 @@ function ProfileDetail() {
                                         />
                                         <span>{relic.mainStatValue}</span>
                                       </div>
+                                    </div>
+                                    {/* Score + Rank below the main stat, beside icon */}
+                                    <div className="text-[10px] font-mono flex items-center space-x-3">
+                                      {(() => {
+                                        const score = computeRelicScore(relic);
+                                        const rank = computeRelicRank(score);
+                                        return (
+                                          <>
+                                            <div>
+                                              <span className="font-bold">
+                                                Score
+                                              </span>
+                                              : {score.toFixed(1)}
+                                            </div>
+                                            <div>
+                                              <span className="font-bold">
+                                                Rank
+                                              </span>
+                                              : {rank}
+                                            </div>
+                                          </>
+                                        );
+                                      })()}
                                     </div>
                                   </div>
                                 </div>
