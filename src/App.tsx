@@ -980,50 +980,29 @@ function ProfileDetail() {
                               <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
                                 <span className="transform skew-x-12 inline-block">RELICS SCORE SUMMARY</span>
                               </h5>
-                              {(() => {
-                                const relics = [
-                                  ...selectedCharacter.cavityRelics,
-                                  ...selectedCharacter.planarRelics,
-                                ];
-                                const baseScore = relics.reduce(
-                                  (sum, r) => sum + computeRelicScore(r),
-                                  0
-                                );
-                                const avgScore = relics.length
-                                  ? baseScore / relics.length
-                                  : 0;
-                                const grade = computeRelicRank(avgScore);
-                                const setCount = selectedCharacter.relicSetEffects
-                                  ? selectedCharacter.relicSetEffects.length
-                                  : 0;
-                                const setBonus = setCount * 2.5;
-                                const total = baseScore + setBonus;
-                                return (
-                                  <div className="space-y-3">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                      <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
-                                        <div className="font-bold text-xs uppercase">Rank</div>
-                                        <div className="text-6xl font-black">{grade}</div>
-                                      </div>
-                                      <div className="bg-white border-2 border-black p-3">
-                                        <div className="text-xs font-bold uppercase mb-1">Score Breakdown</div>
-                                        <div className="flex justify-between text-sm font-mono">
-                                          <span>Base Relic Score:</span>
-                                          <span>{baseScore.toFixed(1)}</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm font-mono">
-                                          <span>Set Bonus:</span>
-                                          <span>{setBonus.toFixed(1)}</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm font-mono font-black">
-                                          <span>Total:</span>
-                                          <span>{total.toFixed(1)}</span>
-                                        </div>
-                                      </div>
+                              <div className="space-y-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                  <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
+                                    <div className="font-bold text-xs uppercase">Rank</div>
+                                    <div className="text-6xl font-black">N/A</div>
+                                  </div>
+                                  <div className="bg-white border-2 border-black p-3">
+                                    <div className="text-xs font-bold uppercase mb-1">Score Breakdown</div>
+                                    <div className="flex justify-between text-sm font-mono">
+                                      <span>Base Relic Score:</span>
+                                      <span>N/A</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm font-mono">
+                                      <span>Set Bonus:</span>
+                                      <span>N/A</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm font-mono font-black">
+                                      <span>Total:</span>
+                                      <span>N/A</span>
                                     </div>
                                   </div>
-                                );
-                              })()}
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="w-full lg:w-5/12">
@@ -1096,22 +1075,14 @@ function ProfileDetail() {
                                           </div>
                                         </div>
                                         <div className="text-[10px] font-mono flex items-center space-x-3">
-                                          {(() => {
-                                            const score = computeRelicScore(relic);
-                                            const rank = computeRelicRank(score);
-                                            return (
-                                              <>
-                                                <div>
-                                                  <span className="font-bold">Score</span>
-                                                  : {score.toFixed(1)}
-                                                </div>
-                                                <div>
-                                                  <span className="font-bold">Rank</span>
-                                                  : {rank}
-                                                </div>
-                                              </>
-                                            );
-                                          })()}
+                                          <div>
+                                            <span className="font-bold">Score</span>
+                                            : N/A
+                                          </div>
+                                          <div>
+                                            <span className="font-bold">Rank</span>
+                                            : N/A
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
