@@ -385,6 +385,7 @@ function ProfileDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+
   React.useEffect(() => {
     const fetchProfile = async () => {
       if (!uid) return;
@@ -483,6 +484,28 @@ function ProfileDetail() {
           }) || [];
           
           setCharacters(transformedCharacters);
+          
+          // Preload all character images
+          const imagePromises = transformedCharacters.map((character: Character) => {
+            return Promise.all([
+              new Promise<void>((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+                img.src = character.portrait;
+              }),
+              new Promise<void>((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve();
+                img.onerror = () => resolve();
+                img.src = character.lightCone.icon;
+              })
+            ]);
+          });
+          
+          Promise.all(imagePromises).then(() => {
+            // Images preloaded successfully
+          });
         } else {
           setError(result.message || 'Failed to fetch profile');
         }
