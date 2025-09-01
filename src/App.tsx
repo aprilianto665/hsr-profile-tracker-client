@@ -872,11 +872,13 @@ function ProfileDetail() {
                                 </h5>
                                 <div className="flex items-center space-x-3 mb-4">
                                   <div className="relative flex-shrink-0">
-                                    <img
-                                      src={selectedCharacter.lightCone.icon}
-                                      alt={selectedCharacter.lightCone.name}
-                                      className="w-24 h-24 object-cover border-2 border-black"
-                                    />
+                                    <div className="w-24 h-24 border-2 border-black bg-white flex items-center justify-center">
+                                      <img
+                                        src={selectedCharacter.lightCone.icon}
+                                        alt={selectedCharacter.lightCone.name}
+                                        className="w-full h-full object-contain"
+                                      />
+                                    </div>
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
                                       {selectedCharacter.lightCone.superimposition}
                                     </div>
