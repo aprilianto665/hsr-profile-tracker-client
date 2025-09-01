@@ -895,9 +895,9 @@ function ProfileDetail() {
                                     </div>
                                     {selectedCharacter.lightCone.attributes && selectedCharacter.lightCone.attributes.length > 0 && (
                                       <div className="bg-white border-2 border-black p-2 mt-2">
-                                        <div className="grid grid-cols-3 gap-2 text-xs">
+                                        <div className="flex flex-nowrap gap-x-4 text-xs overflow-x-auto">
                                           {selectedCharacter.lightCone.attributes.map((attr, idx) => (
-                                            <div key={idx} className="flex items-center justify-between">
+                                            <div key={idx} className="flex items-center">
                                               <div className="w-5 h-5 inline-flex items-center justify-center bg-black border border-black">
                                                 <img
                                                   src={attr.icon}
