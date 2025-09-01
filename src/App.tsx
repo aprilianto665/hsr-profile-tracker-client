@@ -254,104 +254,7 @@ function AnyStatIcon({
   return <StatIcon stat={stat} inverse={inverse} size={size} />;
 }
 
-// -------- Relic Score helpers --------
-function parseNumber(value: string): number {
-  if (!value) return 0;
-  const cleaned = String(value).replace(/[^0-9.\-]/g, "");
-  const n = Number(cleaned);
-  return Number.isFinite(n) ? n : 0;
-}
 
-function computeRelicScore(relic: {
-  subStats: { stat: string; value: string }[];
-}): number {
-  let score = 0;
-  for (const s of relic.subStats) {
-    const name = s.stat.toLowerCase();
-    const val = parseNumber(s.value);
-    if (name.includes("crit rate")) score += 2 * val;
-    else if (name.includes("crit dmg")) score += val;
-    else if (name.includes("spd")) score += val; // light weight for SPD
-  }
-  return score;
-}
-
-function computeRelicEff(relic: {
-  subStats: { stat: string; value: string }[];
-}): number {
-  const targets = ["crit rate", "crit dmg", "spd"];
-  return relic.subStats.filter((s) =>
-    targets.some((t) => s.stat.toLowerCase().includes(t))
-  ).length;
-}
-
-function computeRelicRank(score: number): string {
-  if (score >= 38) return "SS";
-  if (score >= 30) return "S";
-  if (score >= 24) return "A";
-  if (score >= 20) return "B";
-  return "C";
-}
-
-// Build light cone attributes from provided attributes or fallback to stats/placeholder
-function buildLightConeAttributes(lc: {
-  attributes?: {
-    field: string;
-    name: string;
-    icon: string;
-    value?: number | string;
-    display?: string | number;
-    percent?: boolean;
-  }[];
-  stats?: { hp?: number; atk?: number; def?: number };
-}) {
-  if (lc.attributes && lc.attributes.length > 0) {
-    // Normalize: ensure display populated using value when missing
-    return lc.attributes.map((a) => ({
-      ...a,
-      display:
-        a.display !== undefined && a.display !== null && a.display !== ""
-          ? String(a.display)
-          : a.value !== undefined && a.value !== null
-          ? (() => {
-              const num = Number(a.value);
-              if (Number.isFinite(num)) {
-                return a.percent
-                  ? `${num.toFixed(1)}%`
-                  : String(Math.round(num));
-              }
-              return String(a.value);
-            })()
-          : "—",
-    }));
-  }
-  const hp = lc.stats?.hp != null ? String(lc.stats.hp) : "—";
-  const atk = lc.stats?.atk != null ? String(lc.stats.atk) : "—";
-  const def = lc.stats?.def != null ? String(lc.stats.def) : "—";
-  return [
-    {
-      field: "hp",
-      name: "Base HP",
-      icon: "icon/property/IconMaxHP.png",
-      display: hp,
-      percent: false,
-    },
-    {
-      field: "atk",
-      name: "Base ATK",
-      icon: "icon/property/IconAttack.png",
-      display: atk,
-      percent: false,
-    },
-    {
-      field: "def",
-      name: "Base DEF",
-      icon: "icon/property/IconDefence.png",
-      display: def,
-      percent: false,
-    },
-  ];
-}
 
 function HomePage() {
   const [uid, setUid] = useState("");
@@ -493,46 +396,46 @@ function ProfileDetail() {
         
         if (result.status === 'success') {
           setProfileData(result.data);
-          const transformedCharacters = result.data.characters?.map((char: any) => {
-            const finalStats = char.final_stats || [];
+          const transformedCharacters = result.data.characters?.map((char: Record<string, unknown>) => {
+            const finalStats = (char.final_stats as Array<{name: string; value: string}>) || [];
             const getStatValue = (statName: string) => {
-              const stat = finalStats.find((s: any) => s.name.toLowerCase().includes(statName.toLowerCase()));
+              const stat = finalStats.find((s) => s.name.toLowerCase().includes(statName.toLowerCase()));
               return stat ? parseFloat(stat.value) || 0 : 0;
             };
             
-            const cavityRelics = char.relics?.filter((r: any) => r.type >= 1 && r.type <= 4).map((relic: any) => ({
-              name: relic.name,
-              level: relic.level,
-              mainStat: relic.main_affix?.name || '',
-              mainStatValue: relic.main_affix?.value || '',
-              icon: relic.icon,
-              slot: ['', 'Head', 'Hands', 'Body', 'Feet'][relic.type] || 'Unknown',
-              rarity: relic.rarity || 5,
-              subStats: relic.sub_affix?.map((sub: any) => ({
-                stat: sub.name,
-                value: sub.value,
-              })) || [],
+            const cavityRelics = (char.relics as Array<Record<string, unknown>>)?.filter((r) => (r.type as number) >= 1 && (r.type as number) <= 4).map((relic) => ({
+              name: relic.name as string,
+              level: relic.level as number,
+              mainStat: (relic.main_affix as Record<string, unknown>)?.name as string || '',
+              mainStatValue: (relic.main_affix as Record<string, unknown>)?.value as string || '',
+              icon: relic.icon as string,
+              slot: ['', 'Head', 'Hands', 'Body', 'Feet'][relic.type as number] || 'Unknown',
+              rarity: relic.rarity as number || 5,
+              subStats: ((relic.sub_affix as Array<Record<string, unknown>>)?.map((sub) => ({
+                stat: sub.name as string,
+                value: sub.value as string,
+              })) || []),
             })) || [];
             
-            const planarRelics = char.relics?.filter((r: any) => r.type >= 5 && r.type <= 6).map((relic: any) => ({
-              name: relic.name,
-              level: relic.level,
-              mainStat: relic.main_affix?.name || '',
-              mainStatValue: relic.main_affix?.value || '',
-              icon: relic.icon,
-              slot: relic.type === 5 ? 'Planar Sphere' : 'Link Rope',
-              rarity: relic.rarity || 5,
-              subStats: relic.sub_affix?.map((sub: any) => ({
-                stat: sub.name,
-                value: sub.value,
-              })) || [],
+            const planarRelics = (char.relics as Array<Record<string, unknown>>)?.filter((r) => (r.type as number) >= 5 && (r.type as number) <= 6).map((relic) => ({
+              name: relic.name as string,
+              level: relic.level as number,
+              mainStat: (relic.main_affix as Record<string, unknown>)?.name as string || '',
+              mainStatValue: (relic.main_affix as Record<string, unknown>)?.value as string || '',
+              icon: relic.icon as string,
+              slot: (relic.type as number) === 5 ? 'Planar Sphere' : 'Link Rope',
+              rarity: relic.rarity as number || 5,
+              subStats: ((relic.sub_affix as Array<Record<string, unknown>>)?.map((sub) => ({
+                stat: sub.name as string,
+                value: sub.value as string,
+              })) || []),
             })) || [];
             
             return {
-              id: char.name,
-              name: char.name,
-              element: char.element?.name || 'Unknown',
-              path: char.path?.name || 'Unknown',
+              id: char.name as string,
+              name: char.name as string,
+              element: (char.element as Record<string, unknown>)?.name as string || 'Unknown',
+              path: (char.path as Record<string, unknown>)?.name as string || 'Unknown',
               level: char.level,
               icon: char.portrait,
               portrait: char.portrait,
@@ -553,29 +456,29 @@ function ProfileDetail() {
                 outgoingHealingBoost: getStatValue('outgoing healing boost'),
               },
               lightCone: {
-                name: char.light_cone?.name || 'None',
-                level: char.light_cone?.level || 0,
-                superimposition: char.light_cone?.rank || 0,
-                icon: char.light_cone?.icon || '',
-                rarity: char.light_cone?.rarity || 0,
-                path: char.path?.name || 'Unknown',
-                attributes: char.light_cone?.attributes?.map((attr: any) => ({
-                  field: attr.name.toLowerCase().replace(/\s+/g, ''),
-                  name: attr.name,
-                  icon: attr.icon,
-                  value: parseInt(attr.value) || 0,
-                  display: attr.value,
+                name: (char.light_cone as Record<string, unknown>)?.name as string || 'None',
+                level: (char.light_cone as Record<string, unknown>)?.level as number || 0,
+                superimposition: (char.light_cone as Record<string, unknown>)?.rank as number || 0,
+                icon: (char.light_cone as Record<string, unknown>)?.icon as string || '',
+                rarity: (char.light_cone as Record<string, unknown>)?.rarity as number || 0,
+                path: (char.path as Record<string, unknown>)?.name as string || 'Unknown',
+                attributes: ((char.light_cone as Record<string, unknown>)?.attributes as Array<Record<string, unknown>>)?.map((attr) => ({
+                  field: (attr.name as string).toLowerCase().replace(/\s+/g, ''),
+                  name: attr.name as string,
+                  icon: attr.icon as string,
+                  value: parseInt(attr.value as string) || 0,
+                  display: attr.value as string,
                   percent: false,
                 })) || [],
               },
               cavityRelics,
               planarRelics,
-              relicSetEffects: char.relic_sets?.map((set: any) => ({
-                setName: set.name,
-                pieces: set.num,
+              relicSetEffects: ((char.relic_sets as Array<Record<string, unknown>>)?.map((set) => ({
+                setName: set.name as string,
+                pieces: set.num as number,
                 effect: '',
-                icon: set.icon,
-              })) || [],
+                icon: set.icon as string,
+              })) || []),
             };
           }) || [];
           
@@ -583,7 +486,7 @@ function ProfileDetail() {
         } else {
           setError(result.message || 'Failed to fetch profile');
         }
-      } catch (err) {
+      } catch {
         setError('Failed to fetch profile data');
       } finally {
         setLoading(false);
