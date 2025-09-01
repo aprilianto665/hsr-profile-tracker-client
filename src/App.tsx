@@ -871,11 +871,11 @@ function ProfileDetail() {
                                   <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
                                 </h5>
                                 <div className="flex items-center space-x-3 mb-4">
-                                  <div className="relative">
+                                  <div className="relative flex-shrink-0">
                                     <img
                                       src={selectedCharacter.lightCone.icon}
                                       alt={selectedCharacter.lightCone.name}
-                                      className="w-26 h-26 object-cover border-2 border-black"
+                                      className="w-24 h-24 object-cover border-2 border-black"
                                     />
                                     <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
                                       {selectedCharacter.lightCone.superimposition}
