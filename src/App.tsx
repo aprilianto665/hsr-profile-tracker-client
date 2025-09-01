@@ -66,6 +66,7 @@ interface Stats {
   elementDmg: number;
   breakEffect: number;
   energyRegenRate: number;
+  outgoingHealingBoost: number;
 }
 
 interface Character {
@@ -549,6 +550,7 @@ function ProfileDetail() {
                 elementDmg: getStatValue('dmg boost'),
                 breakEffect: getStatValue('break effect'),
                 energyRegenRate: getStatValue('energy regeneration rate'),
+                outgoingHealingBoost: getStatValue('outgoing healing boost'),
               },
               lightCone: {
                 name: char.light_cone?.name || 'None',
@@ -929,117 +931,44 @@ function ProfileDetail() {
                                   </h5>
                                   <div className="bg-white border-2 border-black p-3 text-sm">
                                     <div className="grid grid-cols-1 gap-y-1">
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="HP" inverse size="w-5 h-5" />
-                                          <span>HP:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.baseHp}
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="ATK" inverse size="w-5 h-5" />
-                                          <span>ATK:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.baseAtk}
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="DEF" inverse size="w-5 h-5" />
-                                          <span>DEF:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.baseDef}
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="SPD" inverse size="w-5 h-5" />
-                                          <span>SPD:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.spd}
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="CRIT Rate" inverse size="w-5 h-5" />
-                                          <span>CRIT Rate:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.critRate}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="CRIT DMG" inverse size="w-5 h-5" />
-                                          <span>CRIT DMG:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.critDmg}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="Effect Hit" inverse size="w-5 h-5" />
-                                          <span>Effect Hit:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.effectHitRate}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="Effect RES" inverse size="w-5 h-5" />
-                                          <span>Effect RES:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.effectRes}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          {(() => {
-                                            const icon = getElementDmgIcon(selectedCharacter.element);
-                                            return icon ? (
-                                              <PropertyIcon
-                                                icon={icon}
-                                                name={`${selectedCharacter.element} DMG`}
-                                                field="DMG"
-                                                size="w-5 h-5"
-                                              />
-                                            ) : (
-                                              <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
-                                            );
-                                          })()}
-                                          <span>{selectedCharacter.element} DMG:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.elementDmg}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2">
-                                          <AnyStatIcon stat="Break Effect" inverse size="w-5 h-5" />
-                                          <span>Break Effect:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.breakEffect}%
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="font-bold text-gray-700 flex items-center gap-2 whitespace-nowrap">
-                                          <AnyStatIcon stat="Energy Regen" inverse size="w-5 h-5" />
-                                          <span>Energy Regen:</span>
-                                        </span>
-                                        <span className="font-mono font-black">
-                                          {selectedCharacter.stats.energyRegenRate}%
-                                        </span>
-                                      </div>
+                                      {[
+                                        { key: 'baseHp', label: 'HP', icon: 'HP', value: selectedCharacter.stats.baseHp, suffix: '' },
+                                        { key: 'baseAtk', label: 'ATK', icon: 'ATK', value: selectedCharacter.stats.baseAtk, suffix: '' },
+                                        { key: 'baseDef', label: 'DEF', icon: 'DEF', value: selectedCharacter.stats.baseDef, suffix: '' },
+                                        { key: 'spd', label: 'SPD', icon: 'SPD', value: selectedCharacter.stats.spd, suffix: '' },
+                                        { key: 'critRate', label: 'CRIT Rate', icon: 'CRIT Rate', value: selectedCharacter.stats.critRate, suffix: '%' },
+                                        { key: 'critDmg', label: 'CRIT DMG', icon: 'CRIT DMG', value: selectedCharacter.stats.critDmg, suffix: '%' },
+                                        { key: 'effectHitRate', label: 'Effect Hit', icon: 'Effect Hit', value: selectedCharacter.stats.effectHitRate, suffix: '%' },
+                                        { key: 'effectRes', label: 'Effect RES', icon: 'Effect RES', value: selectedCharacter.stats.effectRes, suffix: '%' },
+                                        { key: 'elementDmg', label: `${selectedCharacter.element} DMG`, icon: 'DMG', value: selectedCharacter.stats.elementDmg, suffix: '%', isElementDmg: true },
+                                        { key: 'breakEffect', label: 'Break Effect', icon: 'Break Effect', value: selectedCharacter.stats.breakEffect, suffix: '%' },
+                                        { key: 'energyRegenRate', label: 'Energy Regen', icon: 'Energy Regen', value: selectedCharacter.stats.energyRegenRate, suffix: '%' },
+                                        { key: 'outgoingHealingBoost', label: 'Outgoing Healing', icon: 'heal', value: selectedCharacter.stats.outgoingHealingBoost, suffix: '%' },
+                                      ].filter(stat => stat.value > 0).map((stat) => (
+                                        <div key={stat.key} className="flex justify-between items-center">
+                                          <span className="font-bold text-gray-700 flex items-center gap-2">
+                                            {stat.isElementDmg ? (() => {
+                                              const icon = getElementDmgIcon(selectedCharacter.element);
+                                              return icon ? (
+                                                <PropertyIcon
+                                                  icon={icon}
+                                                  name={`${selectedCharacter.element} DMG`}
+                                                  field="DMG"
+                                                  size="w-5 h-5"
+                                                />
+                                              ) : (
+                                                <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
+                                              );
+                                            })() : (
+                                              <AnyStatIcon stat={stat.icon} inverse size="w-5 h-5" />
+                                            )}
+                                            <span>{stat.label}:</span>
+                                          </span>
+                                          <span className="font-mono font-black">
+                                            {stat.value}{stat.suffix}
+                                          </span>
+                                        </div>
+                                      ))}
                                     </div>
                                   </div>
                                 </div>
