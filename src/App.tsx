@@ -44,7 +44,7 @@ interface Relic {
   icon: string;
   slot: string;
   subStats: { stat: string; value: string }[];
-  rarity?: number; // optional; default display 5 if absent
+  rarity?: number;
 }
 
 interface RelicSetEffect {
@@ -78,7 +78,7 @@ interface Character {
   icon: string;
   portrait: string;
   eidolon: number;
-  rarity: number; // 4 or 5
+  rarity: number;
   stats: Stats;
   lightCone: {
     name: string;
@@ -106,14 +106,12 @@ interface ProfileData {
   player: Player;
 }
 
-// Base URL for StarRailRes assets
 const STAR_RAIL_RES_BASE =
   "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
 
-// Map stat names to property icon relative paths under STAR_RAIL_RES_BASE
 function getStatIconPath(stat: string): string | null {
   const s = stat.toLowerCase();
-  // Elemental DMG% on Body piece
+
   if (s.includes("wind dmg")) return "icon/property/IconWindAddedRatio.png";
   if (s.includes("fire dmg")) return "icon/property/IconFireAddedRatio.png";
   if (s.includes("ice dmg")) return "icon/property/IconIceAddedRatio.png";
@@ -146,7 +144,6 @@ function getStatIconPath(stat: string): string | null {
   return null;
 }
 
-// Map element name to its DMG icon path
 function getElementDmgIcon(element: string): string | null {
   const e = element.toLowerCase();
   if (e.includes("ice")) return "icon/property/IconIceAddedRatio.png";
@@ -161,7 +158,6 @@ function getElementDmgIcon(element: string): string | null {
   return null;
 }
 
-// Helper to convert stat names into compact icon-like abbreviations
 function getStatAbbr(stat: string): string {
   const s = stat.toLowerCase();
   if (s.includes("crit dmg")) return "CD%";
@@ -206,7 +202,6 @@ function StatIcon({
   );
 }
 
-// Image icon for attributes with safe fallback to StatIcon when load fails
 function PropertyIcon({
   icon,
   name,
@@ -237,7 +232,6 @@ function PropertyIcon({
   );
 }
 
-// Choose image icon when available; otherwise fallback to text icon
 function AnyStatIcon({
   stat,
   inverse = false,
@@ -366,7 +360,7 @@ function HomePage() {
 
       <footer className="absolute bottom-0 left-0 right-0 bg-black text-white py-2 px-4 z-30">
         <p className="text-center text-xs md:text-sm font-mono">
-          © 2025 HSR Profile Tracker. All rights reserved.
+          © 2025 HSR Profile Tracker. Relic scoring algorithm by <a href="https://scoremyrelic.com/relic-scorer" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">scoremyrelic.com</a>
         </p>
       </footer>
     </div>
@@ -485,7 +479,7 @@ function ProfileDetail() {
           
           setCharacters(transformedCharacters);
           
-          // Preload all character images
+
           const imagePromises = transformedCharacters.map((character: Character) => {
             return Promise.all([
               new Promise<void>((resolve) => {
@@ -504,7 +498,7 @@ function ProfileDetail() {
           });
           
           Promise.all(imagePromises).then(() => {
-            // Images preloaded successfully
+
           });
         } else {
           setError(result.message || 'Failed to fetch profile');
@@ -519,7 +513,7 @@ function ProfileDetail() {
     fetchProfile();
   }, [uid]);
 
-  // Dummy data removed - now using API data
+
 
   React.useEffect(() => {
     if (
@@ -1057,7 +1051,7 @@ function ProfileDetail() {
 
       <footer className="absolute bottom-0 left-0 right-0 bg-black text-white py-2 px-4 z-30">
         <p className="text-center text-xs md:text-sm font-mono">
-          © 2025 HSR Profile Tracker. All rights reserved.
+          © 2025 HSR Profile Tracker. Relic scoring algorithm by <a href="https://scoremyrelic.com/relic-scorer" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-300">scoremyrelic.com</a>
         </p>
       </footer>
     </div>
