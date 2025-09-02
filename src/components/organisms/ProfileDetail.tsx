@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Character, ProfileData } from "../../types";
@@ -14,15 +14,21 @@ export function ProfileDetail() {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshDisabled, setRefreshDisabled] = useState(false);
 
-  React.useEffect(() => {
-    const fetchProfile = async () => {
-      if (!uid) return;
-      
-      try {
+  const fetchProfile = useCallback(async (refresh = false) => {
+    if (!uid) return;
+    
+    try {
+      if (refresh) {
+        setRefreshing(true);
+      } else {
         setLoading(true);
-        const response = await fetch(`http://localhost:3000/profile/${uid}`);
-        const result = await response.json();
+      }
+      const url = refresh ? `http://localhost:3000/profile/${uid}?refresh=true` : `http://localhost:3000/profile/${uid}`;
+      const response = await fetch(url);
+      const result = await response.json();
         
         if (result.status === 'success') {
           setProfileData(result.data);
@@ -139,11 +145,24 @@ export function ProfileDetail() {
         setError('Failed to fetch profile data');
       } finally {
         setLoading(false);
+        setRefreshing(false);
       }
-    };
+    }, [uid]);
+
+  const handleRefresh = async () => {
+    if (refreshDisabled) return;
     
+    setRefreshDisabled(true);
+    await fetchProfile(true);
+    
+    setTimeout(() => {
+      setRefreshDisabled(false);
+    }, 10000);
+  };
+
+  React.useEffect(() => {
     fetchProfile();
-  }, [uid]);
+  }, [fetchProfile]);
 
   React.useEffect(() => {
     if (activeTab === "characters" && !selectedCharacter && characters.length > 0) {
@@ -206,6 +225,37 @@ export function ProfileDetail() {
                 ← BACK
               </Button>
               <div className="flex gap-4">
+                <Button
+                  onClick={handleRefresh}
+                  disabled={refreshDisabled || refreshing}
+                  className={`w-12 h-12 font-bold uppercase tracking-wide border-2 border-black flex items-center justify-center ${
+                    refreshDisabled || refreshing
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-white text-black hover:bg-gray-100"
+                  }`}
+                >
+                  {refreshDisabled || refreshing ? (
+                    <img
+                      src="/herta-kurukuru.gif"
+                      alt="Loading"
+                      className="w-8 h-8"
+                    />
+                  ) : (
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      />
+                    </svg>
+                  )}
+                </Button>
                 <Button
                   onClick={() => setActiveTab("info")}
                   className={`px-4 py-2 font-bold uppercase tracking-wide border-2 border-black ${
