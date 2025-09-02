@@ -91,7 +91,7 @@ interface Character {
     attributes?: {
       field: string;
       name: string;
-      icon: string; // relative path under STAR_RAIL_RES_BASE
+      icon: string;
       value: number;
       display: string;
       percent: boolean;
@@ -106,83 +106,89 @@ interface ProfileData {
   player: Player;
 }
 
-const STAR_RAIL_RES_BASE =
-  "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
+const STAR_RAIL_RES_BASE = "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
 
 function getStatIconPath(stat: string): string | null {
   const s = stat.toLowerCase();
-
-  if (s.includes("wind dmg")) return "icon/property/IconWindAddedRatio.png";
-  if (s.includes("fire dmg")) return "icon/property/IconFireAddedRatio.png";
-  if (s.includes("ice dmg")) return "icon/property/IconIceAddedRatio.png";
-  if (s.includes("lightning dmg") || s.includes("thunder dmg"))
-    return "icon/property/IconThunderAddedRatio.png";
-  if (s.includes("imaginary dmg"))
-    return "icon/property/IconImaginaryAddedRatio.png";
-  if (s.includes("quantum dmg"))
-    return "icon/property/IconQuantumAddedRatio.png";
-  if (s.includes("physical dmg"))
-    return "icon/property/IconPhysicalAddedRatio.png";
-  if (s.includes("heal")) return "icon/property/IconHealRatio.png";
-  if (s.includes("crit dmg")) return "icon/property/IconCriticalDamage.png";
-  if (s.includes("crit rate")) return "icon/property/IconCriticalChance.png";
-  if (s.includes("energy") && s.includes("regen"))
-    return "icon/property/IconEnergyRecovery.png";
-  if (s.includes("effect") && s.includes("res"))
-    return "icon/property/IconStatusResistance.png";
-  if (s.includes("effect") && (s.includes("hit") || s.includes("prob")))
-    return "icon/property/IconStatusProbability.png";
-  if (s.includes("break")) return "icon/property/IconBreakUp.png";
-  if (s.includes("spd") || s.includes("speed"))
-    return "icon/property/IconSpeed.png";
-  if (s.includes("atk%")) return "icon/property/IconAttack.png";
-  if (s === "atk" || s.includes(" atk")) return "icon/property/IconAttack.png";
-  if (s.includes("def%")) return "icon/property/IconDefence.png";
-  if (s === "def" || s.includes(" def")) return "icon/property/IconDefence.png";
-  if (s.includes("hp%")) return "icon/property/IconMaxHP.png";
-  if (s === "hp" || s.includes(" hp")) return "icon/property/IconMaxHP.png";
+  const iconMap: Record<string, string> = {
+    "wind dmg": "icon/property/IconWindAddedRatio.png",
+    "fire dmg": "icon/property/IconFireAddedRatio.png",
+    "ice dmg": "icon/property/IconIceAddedRatio.png",
+    "lightning dmg": "icon/property/IconThunderAddedRatio.png",
+    "thunder dmg": "icon/property/IconThunderAddedRatio.png",
+    "imaginary dmg": "icon/property/IconImaginaryAddedRatio.png",
+    "quantum dmg": "icon/property/IconQuantumAddedRatio.png",
+    "physical dmg": "icon/property/IconPhysicalAddedRatio.png",
+    "heal": "icon/property/IconHealRatio.png",
+    "crit dmg": "icon/property/IconCriticalDamage.png",
+    "crit rate": "icon/property/IconCriticalChance.png",
+    "energy regen": "icon/property/IconEnergyRecovery.png",
+    "effect res": "icon/property/IconStatusResistance.png",
+    "effect hit": "icon/property/IconStatusProbability.png",
+    "effect prob": "icon/property/IconStatusProbability.png",
+    "break": "icon/property/IconBreakUp.png",
+    "spd": "icon/property/IconSpeed.png",
+    "speed": "icon/property/IconSpeed.png",
+    "atk%": "icon/property/IconAttack.png",
+    "atk": "icon/property/IconAttack.png",
+    "def%": "icon/property/IconDefence.png",
+    "def": "icon/property/IconDefence.png",
+    "hp%": "icon/property/IconMaxHP.png",
+    "hp": "icon/property/IconMaxHP.png"
+  };
+  
+  for (const [key, value] of Object.entries(iconMap)) {
+    if (s.includes(key)) return value;
+  }
   return null;
 }
 
 function getElementDmgIcon(element: string): string | null {
+  const elementMap: Record<string, string> = {
+    "ice": "icon/property/IconIceAddedRatio.png",
+    "fire": "icon/property/IconFireAddedRatio.png",
+    "wind": "icon/property/IconWindAddedRatio.png",
+    "physical": "icon/property/IconPhysicalAddedRatio.png",
+    "quantum": "icon/property/IconQuantumAddedRatio.png",
+    "imaginary": "icon/property/IconImaginaryAddedRatio.png",
+    "thunder": "icon/property/IconThunderAddedRatio.png",
+    "lightning": "icon/property/IconThunderAddedRatio.png"
+  };
+  
   const e = element.toLowerCase();
-  if (e.includes("ice")) return "icon/property/IconIceAddedRatio.png";
-  if (e.includes("fire")) return "icon/property/IconFireAddedRatio.png";
-  if (e.includes("wind")) return "icon/property/IconWindAddedRatio.png";
-  if (e.includes("physical")) return "icon/property/IconPhysicalAddedRatio.png";
-  if (e.includes("quantum")) return "icon/property/IconQuantumAddedRatio.png";
-  if (e.includes("imaginary"))
-    return "icon/property/IconImaginaryAddedRatio.png";
-  if (e.includes("thunder") || e.includes("lightning"))
-    return "icon/property/IconThunderAddedRatio.png";
+  for (const [key, value] of Object.entries(elementMap)) {
+    if (e.includes(key)) return value;
+  }
   return null;
 }
 
 function getStatAbbr(stat: string): string {
   const s = stat.toLowerCase();
-  if (s.includes("crit dmg")) return "CD%";
-  if (s.includes("crit rate")) return "CR%";
-  if (s.includes("energy regen")) return "ERR%";
-  if (s.includes("effect res")) return "RES%";
-  if (s.includes("effect hit")) return "EHR%";
-  if (s.includes("break effect")) return "BE%";
-  if (s.includes("heal")) return "HEAL%";
-  if (s.includes("atk%")) return "ATK%";
-  if (s === "atk") return "ATK";
-  if (s.includes("def%")) return "DEF%";
-  if (s === "def") return "DEF";
-  if (s.includes("hp%")) return "HP%";
-  if (s === "hp") return "HP";
-  if (s.includes("spd")) return "SPD";
+  const abbrMap: Record<string, string> = {
+    "crit dmg": "CD%",
+    "crit rate": "CR%",
+    "energy regen": "ERR%",
+    "effect res": "RES%",
+    "effect hit": "EHR%",
+    "break effect": "BE%",
+    "heal": "HEAL%",
+    "atk%": "ATK%",
+    "atk": "ATK",
+    "def%": "DEF%",
+    "def": "DEF",
+    "hp%": "HP%",
+    "hp": "HP",
+    "spd": "SPD"
+  };
+  
+  for (const [key, value] of Object.entries(abbrMap)) {
+    if (s.includes(key)) return value;
+  }
   if (s.includes("dmg") && s.includes("%")) return "DMG%";
   return stat.toUpperCase();
 }
 
-function StatIcon({
-  stat,
-  inverse = false,
-  size = "w-6 h-6",
-}: {
+function StatIcon({ stat, inverse = false, size = "w-6 h-6" }: {
   stat: string;
   inverse?: boolean;
   size?: string;
@@ -190,35 +196,27 @@ function StatIcon({
   const abbr = getStatAbbr(stat);
   const styleClass = inverse ? "stat-icon-inverse" : "stat-icon-normal";
   return (
-    <span
-      className={`${styleClass} ${size}`}
-      title={stat}
-    >
+    <span className={`${styleClass} ${size}`} title={stat}>
       {abbr}
     </span>
   );
 }
 
-function PropertyIcon({
-  icon,
-  name,
-  field,
-  size = "w-5 h-5",
-}: {
+function PropertyIcon({ icon, name, field, size = "w-5 h-5" }: {
   icon: string;
   name: string;
   field: string;
   size?: string;
 }) {
   const [failed, setFailed] = React.useState(false);
+  
   if (failed) {
     return <StatIcon stat={field} size={size} inverse={true} />;
   }
+  
   const normalized = icon.startsWith("/") ? icon.slice(1) : icon;
   return (
-    <span
-      className={`${size} property-icon-container`}
-    >
+    <span className={`${size} property-icon-container`}>
       <img
         src={`${STAR_RAIL_RES_BASE}${normalized}`}
         alt={name}
@@ -229,23 +227,220 @@ function PropertyIcon({
   );
 }
 
-function AnyStatIcon({
-  stat,
-  inverse = false,
-  size = "w-5 h-5",
-}: {
+function AnyStatIcon({ stat, inverse = false, size = "w-5 h-5" }: {
   stat: string;
   inverse?: boolean;
   size?: string;
 }) {
-  const p = getStatIconPath(stat);
-  if (p) {
-    return <PropertyIcon icon={p} name={stat} field={stat} size={size} />;
-  }
-  return <StatIcon stat={stat} inverse={inverse} size={size} />;
+  const iconPath = getStatIconPath(stat);
+  return iconPath ? (
+    <PropertyIcon icon={iconPath} name={stat} field={stat} size={size} />
+  ) : (
+    <StatIcon stat={stat} inverse={inverse} size={size} />
+  );
+}
+
+function Button({ onClick, className, children, type = "button" }: {
+  onClick?: () => void;
+  className?: string;
+  children: React.ReactNode;
+  type?: "button" | "submit";
+}) {
+  return (
+    <button type={type} onClick={onClick} className={className}>
+      {children}
+    </button>
+  );
+}
+
+function Input({ value, onChange, onKeyDown, placeholder, className, type = "text", id }: {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  className?: string;
+  type?: string;
+  id?: string;
+}) {
+  return (
+    <input
+      type={type}
+      id={id}
+      value={value}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      placeholder={placeholder}
+      className={className}
+    />
+  );
 }
 
 
+
+function StarRating({ count }: { count: number }) {
+  return <span className="text-black text-xs md:text-sm">{"★".repeat(count)}</span>;
+}
+
+
+
+function CharacterPortrait({ character }: { character: Character }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="relative inline-block mb-4">
+        <img
+          src={character.portrait}
+          alt={character.name}
+          className="w-32 h-32 object-cover border-2 border-black"
+        />
+        <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform">
+          <StarRating count={character.rarity} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CharacterInfo({ character }: { character: Character }) {
+  return (
+    <div className="mt-3 md:mt-0 md:flex-1">
+      <div className="text-left space-y-2">
+        <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
+          <span className="transform skew-x-12 inline-block">{character.name}</span>
+        </h4>
+      </div>
+      <div className="mt-2 text-sm w-full space-y-1 text-left">
+        <div className="font-mono"><span className="font-bold">Element</span> : {character.element}</div>
+        <div className="font-mono"><span className="font-bold">Path</span> : {character.path}</div>
+        <div className="font-mono"><span className="font-bold">Level</span> : {character.level}</div>
+        <div className="font-mono"><span className="font-bold">Eidolon Level</span> : {character.eidolon}</div>
+      </div>
+    </div>
+  );
+}
+
+function LightConeDisplay({ lightCone }: { lightCone: Character['lightCone'] }) {
+  return (
+    <>
+      <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+        <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
+      </h5>
+      <div className="flex items-center space-x-3 mb-4">
+        <div className="relative flex-shrink-0">
+          <div className="w-24 h-24 border-2 border-black bg-white flex items-center justify-center">
+            <img src={lightCone.icon} alt={lightCone.name} className="w-full h-full object-contain" />
+          </div>
+          <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
+            {lightCone.superimposition}
+          </div>
+          <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform">
+            <StarRating count={lightCone.rarity} />
+          </div>
+        </div>
+        <div className="text-sm">
+          <div className="font-mono font-bold break-words mb-1">{lightCone.name}</div>
+          <div className="font-mono">Level: {lightCone.level}</div>
+          {lightCone.attributes && lightCone.attributes.length > 0 && (
+            <div className="bg-white border-2 border-black p-2 mt-2">
+              <div className="flex flex-nowrap gap-x-4 text-xs overflow-x-auto">
+                {lightCone.attributes.map((attr, idx) => (
+                  <div key={idx} className="flex items-center">
+                    <div className="w-5 h-5 inline-flex items-center justify-center bg-black border border-black">
+                      <img
+                        src={attr.icon}
+                        alt={attr.name}
+                        className="w-4 h-4"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<span class="text-white text-[8px] font-black">${attr.field.toUpperCase().slice(0,3)}</span>`;
+                          }
+                        }}
+                      />
+                    </div>
+                    <span className="font-mono font-black ml-2">{attr.display}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function StatsDisplay({ character }: { character: Character }) {
+  const stats = [
+    { key: 'baseHp', label: 'HP', icon: 'HP', value: character.stats.baseHp, suffix: '' },
+    { key: 'baseAtk', label: 'ATK', icon: 'ATK', value: character.stats.baseAtk, suffix: '' },
+    { key: 'baseDef', label: 'DEF', icon: 'DEF', value: character.stats.baseDef, suffix: '' },
+    { key: 'spd', label: 'SPD', icon: 'SPD', value: character.stats.spd, suffix: '' },
+    { key: 'critRate', label: 'CRIT Rate', icon: 'CRIT Rate', value: character.stats.critRate, suffix: '%' },
+    { key: 'critDmg', label: 'CRIT DMG', icon: 'CRIT DMG', value: character.stats.critDmg, suffix: '%' },
+    { key: 'effectHitRate', label: 'Effect Hit', icon: 'Effect Hit', value: character.stats.effectHitRate, suffix: '%' },
+    { key: 'effectRes', label: 'Effect RES', icon: 'Effect RES', value: character.stats.effectRes, suffix: '%' },
+    { key: 'elementDmg', label: `${character.element} DMG`, icon: 'DMG', value: character.stats.elementDmg, suffix: '%', isElementDmg: true },
+    { key: 'breakEffect', label: 'Break Effect', icon: 'Break Effect', value: character.stats.breakEffect, suffix: '%' },
+    { key: 'energyRegenRate', label: 'Energy Regen', icon: 'Energy Regen', value: character.stats.energyRegenRate, suffix: '%' },
+    { key: 'outgoingHealingBoost', label: 'Outgoing Healing', icon: 'heal', value: character.stats.outgoingHealingBoost, suffix: '%' },
+  ].filter(stat => stat.value > 0);
+
+  return (
+    <div className="w-full mt-2">
+      <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+        <span className="transform skew-x-12 inline-block">STATS</span>
+      </h5>
+      <div className="bg-white border-2 border-black p-3 text-sm">
+        <div className="grid grid-cols-1 gap-y-1">
+          {stats.map((stat) => (
+            <div key={stat.key} className="flex justify-between items-center">
+              <span className="font-bold text-gray-700 flex items-center gap-2">
+                {stat.isElementDmg ? (() => {
+                  const icon = getElementDmgIcon(character.element);
+                  return icon ? (
+                    <PropertyIcon icon={icon} name={`${character.element} DMG`} field="DMG" size="w-5 h-5" />
+                  ) : (
+                    <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
+                  );
+                })() : (
+                  <AnyStatIcon stat={stat.icon} inverse size="w-5 h-5" />
+                )}
+                <span>{stat.label}:</span>
+              </span>
+              <span className="font-mono font-black">{stat.value}{stat.suffix}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoCard({ title, children, className }: {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`border-2 border-black p-4 ${className || ''}`}>
+      <h3 className="text-xl font-bold text-black mb-4 uppercase tracking-wide border-b-2 border-black pb-2">
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
+function InfoRow({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="flex justify-between">
+      <span className="font-bold">{label}:</span>
+      <span className="font-mono">{value}</span>
+    </div>
+  );
+}
 
 function HomePage() {
   const [uid, setUid] = useState("");
@@ -256,9 +451,7 @@ function HomePage() {
     e.preventDefault();
     if (uid.trim()) {
       try {
-        const response = await fetch(
-          `http://localhost:3000/checkprofile/${uid}`
-        );
+        const response = await fetch(`http://localhost:3000/checkprofile/${uid}`);
         const data = await response.json();
         if (data.exists) {
           navigate(`/profile/${uid}`);
@@ -269,6 +462,19 @@ function HomePage() {
         console.error("Error checking profile:", error);
         setMessage("Failed to check profile. Please try again.");
       }
+    }
+  };
+
+  const handleUidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 9 && !value.includes("-")) {
+      setUid(value);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (["-", "+", "e", "E"].includes(e.key)) {
+      e.preventDefault();
     }
   };
 
@@ -311,30 +517,16 @@ function HomePage() {
                 ENTER YOUR UID
               </label>
               <div className="flex flex-col md:flex-row border-3 border-black">
-                <input
+                <Input
                   type="number"
                   id="uid"
                   value={uid}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value.length <= 9 && !value.includes("-")) {
-                      setUid(value);
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (
-                      e.key === "-" ||
-                      e.key === "+" ||
-                      e.key === "e" ||
-                      e.key === "E"
-                    ) {
-                      e.preventDefault();
-                    }
-                  }}
+                  onChange={handleUidChange}
+                  onKeyDown={handleKeyDown}
                   placeholder="800123456"
                   className="flex-1 px-3 md:px-6 py-3 md:py-6 text-lg md:text-2xl bg-white border-b-3 md:border-b-0 md:border-r-3 border-black text-black placeholder-gray-500 focus:outline-none font-mono tracking-wider focus:bg-gray-50"
                 />
-                <button
+                <Button
                   type="submit"
                   className="px-4 md:px-8 py-3 md:py-6 text-lg md:text-xl font-bold bg-black text-white hover:bg-gray-800 focus:outline-none whitespace-nowrap uppercase tracking-wide relative overflow-hidden group"
                 >
@@ -343,13 +535,11 @@ function HomePage() {
                   <span className="absolute inset-0 flex items-center justify-center text-black font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                     GO!
                   </span>
-                </button>
+                </Button>
               </div>
             </form>
             {message && (
-              <p className="mt-4 text-center text-red-500 font-bold">
-                {message}
-              </p>
+              <p className="mt-4 text-center text-red-500 font-bold">{message}</p>
             )}
           </div>
         </div>
@@ -576,14 +766,14 @@ function ProfileDetail() {
 
           <div className="bg-white border-2 md:border-4 border-black p-4 md:p-8 relative pt-12 md:pt-16 space-y-6 overflow-visible">
             <div className="flex justify-between mb-4 mt-6">
-              <button
+              <Button
                 onClick={() => navigate("/")}
                 className="px-4 py-2 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 border-2 border-black"
               >
                 ← BACK
-              </button>
+              </Button>
               <div className="flex gap-4">
-                <button
+                <Button
                   onClick={() => setActiveTab("info")}
                   className={`px-4 py-2 font-bold uppercase tracking-wide border-2 border-black ${
                     activeTab === "info"
@@ -592,8 +782,8 @@ function ProfileDetail() {
                   }`}
                 >
                   MAIN INFO
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setActiveTab("characters")}
                   className={`px-4 py-2 font-bold uppercase tracking-wide border-2 border-black ${
                     activeTab === "characters"
@@ -602,16 +792,13 @@ function ProfileDetail() {
                   }`}
                 >
                   CHARACTERS
-                </button>
+                </Button>
               </div>
             </div>
 
             {activeTab === "info" && (
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="border-2 border-black p-4 flex flex-col">
-                  <h3 className="text-xl font-bold text-black mb-4 uppercase tracking-wide border-b-2 border-black pb-2">
-                    AVATAR
-                  </h3>
+                <InfoCard title="AVATAR" className="flex flex-col">
                   <div className="flex flex-col items-center justify-center space-y-3 flex-1">
                     <img
                       src={profileData?.player?.avatar?.icon || ''}
@@ -624,95 +811,29 @@ function ProfileDetail() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </InfoCard>
 
-                <div className="border-2 border-black p-4 md:col-span-2">
-                  <h3 className="text-xl font-bold text-black mb-4 uppercase tracking-wide border-b-2 border-black pb-2">
-                    BASIC INFO
-                  </h3>
+                <InfoCard title="BASIC INFO" className="md:col-span-2">
                   <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="font-bold">NICKNAME:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.nickname || 'Unknown'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">LEVEL:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.level || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">WORLD LEVEL:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.world_level || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">FRIENDS:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.friend_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">SIGNATURE:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.signature || 'No signature'}
-                      </span>
-                    </div>
+                    <InfoRow label="NICKNAME" value={profileData?.player?.nickname || 'Unknown'} />
+                    <InfoRow label="LEVEL" value={profileData?.player?.level || 0} />
+                    <InfoRow label="WORLD LEVEL" value={profileData?.player?.world_level || 0} />
+                    <InfoRow label="FRIENDS" value={profileData?.player?.friend_count || 0} />
+                    <InfoRow label="SIGNATURE" value={profileData?.player?.signature || 'No signature'} />
                   </div>
-                </div>
+                </InfoCard>
 
-                <div className="border-2 border-black p-4">
-                  <h3 className="text-xl font-bold text-black mb-4 uppercase tracking-wide border-b-2 border-black pb-2">
-                    SPACE INFO
-                  </h3>
+                <InfoCard title="SPACE INFO">
                   <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="font-bold">UNIVERSE LEVEL:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.universe_level || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">AVATARS:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.avatar_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">LIGHT CONES:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.light_cone_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">RELICS:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.relic_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">ACHIEVEMENTS:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.achievement_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">BOOKS:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.book_count || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-bold">MUSIC:</span>
-                      <span className="font-mono">
-                        {profileData?.player?.space_info?.music_count || 0}
-                      </span>
-                    </div>
+                    <InfoRow label="UNIVERSE LEVEL" value={profileData?.player?.space_info?.universe_level || 0} />
+                    <InfoRow label="AVATARS" value={profileData?.player?.space_info?.avatar_count || 0} />
+                    <InfoRow label="LIGHT CONES" value={profileData?.player?.space_info?.light_cone_count || 0} />
+                    <InfoRow label="RELICS" value={profileData?.player?.space_info?.relic_count || 0} />
+                    <InfoRow label="ACHIEVEMENTS" value={profileData?.player?.space_info?.achievement_count || 0} />
+                    <InfoRow label="BOOKS" value={profileData?.player?.space_info?.book_count || 0} />
+                    <InfoRow label="MUSIC" value={profileData?.player?.space_info?.music_count || 0} />
                   </div>
-                </div>
+                </InfoCard>
               </div>
             )}
 
@@ -726,7 +847,7 @@ function ProfileDetail() {
                   <>
                     <div className="flex flex-wrap gap-0 mb-0 relative top-1">
                       {characters.map((character, index) => (
-                        <button
+                        <Button
                           key={character.id}
                           onClick={() => setSelectedCharacter(character)}
                           className={`border-2 border-black px-4 py-2 font-bold text-sm uppercase tracking-wide relative ${
@@ -736,7 +857,7 @@ function ProfileDetail() {
                           } ${index > 0 ? "-ml-0.5" : ""}`}
                         >
                           {character.name}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                     {selectedCharacter && (
@@ -746,151 +867,13 @@ function ProfileDetail() {
                             <div className="flex gap-6 w-full">
                               <div className="w-full">
                                 <div className="flex flex-col md:flex-row md:items-start md:space-x-4">
-                                  <div className="flex flex-col items-center">
-                                    <div className="relative inline-block mb-4">
-                                      <img
-                                        src={selectedCharacter.portrait}
-                                        alt={selectedCharacter.name}
-                                        className="w-32 h-32 object-cover border-2 border-black"
-                                      />
-                                      <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform">
-                                        <span className="text-black text-xs md:text-sm">
-                                          {"★".repeat(selectedCharacter.rarity)}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="mt-3 md:mt-0 md:flex-1">
-                                    <div className="text-left space-y-2">
-                                      <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
-                                        <span className="transform skew-x-12 inline-block">
-                                          {selectedCharacter.name}
-                                        </span>
-                                      </h4>
-                                    </div>
-                                    <div className="mt-2 text-sm w-full space-y-1 text-left">
-                                      <div className="font-mono">
-                                        <span className="font-bold">Element</span> : {selectedCharacter.element}
-                                      </div>
-                                      <div className="font-mono">
-                                        <span className="font-bold">Path</span> : {selectedCharacter.path}
-                                      </div>
-                                      <div className="font-mono">
-                                        <span className="font-bold">Level</span> : {selectedCharacter.level}
-                                      </div>
-                                      <div className="font-mono">
-                                        <span className="font-bold">Eidolon Level</span> : {selectedCharacter.eidolon}
-                                      </div>
-                                    </div>
-                                  </div>
+                                  <CharacterPortrait character={selectedCharacter} />
+                                  <CharacterInfo character={selectedCharacter} />
                                 </div>
-                                <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                                  <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
-                                </h5>
-                                <div className="flex items-center space-x-3 mb-4">
-                                  <div className="relative flex-shrink-0">
-                                    <div className="w-24 h-24 border-2 border-black bg-white flex items-center justify-center">
-                                      <img
-                                        src={selectedCharacter.lightCone.icon}
-                                        alt={selectedCharacter.lightCone.name}
-                                        className="w-full h-full object-contain"
-                                      />
-                                    </div>
-                                    <div className="absolute -top-1 -right-1 bg-black text-white text-sm px-1.5 py-0.5 font-black">
-                                      {selectedCharacter.lightCone.superimposition}
-                                    </div>
-                                    <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 bg-white px-1 leading-none transform">
-                                      <span className="text-black text-xs md:text-sm">
-                                        {"★".repeat(selectedCharacter.lightCone.rarity)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  <div className="text-sm">
-                                    <div className="font-mono font-bold break-words mb-1">
-                                      {selectedCharacter.lightCone.name}
-                                    </div>
-                                    <div className="font-mono">
-                                      Level: {selectedCharacter.lightCone.level}
-                                    </div>
-                                    {selectedCharacter.lightCone.attributes && selectedCharacter.lightCone.attributes.length > 0 && (
-                                      <div className="bg-white border-2 border-black p-2 mt-2">
-                                        <div className="flex flex-nowrap gap-x-4 text-xs overflow-x-auto">
-                                          {selectedCharacter.lightCone.attributes.map((attr, idx) => (
-                                            <div key={idx} className="flex items-center">
-                                              <div className="w-5 h-5 inline-flex items-center justify-center bg-black border border-black">
-                                                <img
-                                                  src={attr.icon}
-                                                  alt={attr.name}
-                                                  className="w-4 h-4"
-                                                  onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    target.style.display = 'none';
-                                                    const parent = target.parentElement;
-                                                    if (parent) {
-                                                      parent.innerHTML = `<span class="text-white text-[8px] font-black">${attr.field.toUpperCase().slice(0,3)}</span>`;
-                                                    }
-                                                  }}
-                                                />
-                                              </div>
-                                              <span className="font-mono font-black ml-2">
-                                                {attr.display}
-                                              </span>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
+                                <LightConeDisplay lightCone={selectedCharacter.lightCone} />
                               </div>
                               <div className="w-full">
-                                <div className="w-full mt-2">
-                                  <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
-                                    <span className="transform skew-x-12 inline-block">STATS</span>
-                                  </h5>
-                                  <div className="bg-white border-2 border-black p-3 text-sm">
-                                    <div className="grid grid-cols-1 gap-y-1">
-                                      {[
-                                        { key: 'baseHp', label: 'HP', icon: 'HP', value: selectedCharacter.stats.baseHp, suffix: '' },
-                                        { key: 'baseAtk', label: 'ATK', icon: 'ATK', value: selectedCharacter.stats.baseAtk, suffix: '' },
-                                        { key: 'baseDef', label: 'DEF', icon: 'DEF', value: selectedCharacter.stats.baseDef, suffix: '' },
-                                        { key: 'spd', label: 'SPD', icon: 'SPD', value: selectedCharacter.stats.spd, suffix: '' },
-                                        { key: 'critRate', label: 'CRIT Rate', icon: 'CRIT Rate', value: selectedCharacter.stats.critRate, suffix: '%' },
-                                        { key: 'critDmg', label: 'CRIT DMG', icon: 'CRIT DMG', value: selectedCharacter.stats.critDmg, suffix: '%' },
-                                        { key: 'effectHitRate', label: 'Effect Hit', icon: 'Effect Hit', value: selectedCharacter.stats.effectHitRate, suffix: '%' },
-                                        { key: 'effectRes', label: 'Effect RES', icon: 'Effect RES', value: selectedCharacter.stats.effectRes, suffix: '%' },
-                                        { key: 'elementDmg', label: `${selectedCharacter.element} DMG`, icon: 'DMG', value: selectedCharacter.stats.elementDmg, suffix: '%', isElementDmg: true },
-                                        { key: 'breakEffect', label: 'Break Effect', icon: 'Break Effect', value: selectedCharacter.stats.breakEffect, suffix: '%' },
-                                        { key: 'energyRegenRate', label: 'Energy Regen', icon: 'Energy Regen', value: selectedCharacter.stats.energyRegenRate, suffix: '%' },
-                                        { key: 'outgoingHealingBoost', label: 'Outgoing Healing', icon: 'heal', value: selectedCharacter.stats.outgoingHealingBoost, suffix: '%' },
-                                      ].filter(stat => stat.value > 0).map((stat) => (
-                                        <div key={stat.key} className="flex justify-between items-center">
-                                          <span className="font-bold text-gray-700 flex items-center gap-2">
-                                            {stat.isElementDmg ? (() => {
-                                              const icon = getElementDmgIcon(selectedCharacter.element);
-                                              return icon ? (
-                                                <PropertyIcon
-                                                  icon={icon}
-                                                  name={`${selectedCharacter.element} DMG`}
-                                                  field="DMG"
-                                                  size="w-5 h-5"
-                                                />
-                                              ) : (
-                                                <AnyStatIcon stat="DMG" inverse size="w-5 h-5" />
-                                              );
-                                            })() : (
-                                              <AnyStatIcon stat={stat.icon} inverse size="w-5 h-5" />
-                                            )}
-                                            <span>{stat.label}:</span>
-                                          </span>
-                                          <span className="font-mono font-black">
-                                            {stat.value}{stat.suffix}
-                                          </span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                </div>
+                                <StatsDisplay character={selectedCharacter} />
                               </div>
                             </div>
                             <div className="w-full">
