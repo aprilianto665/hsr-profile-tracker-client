@@ -188,13 +188,10 @@ function StatIcon({
   size?: string;
 }) {
   const abbr = getStatAbbr(stat);
-  const base = "inline-flex items-center justify-center align-middle";
-  const style = inverse ? "text-white border-white" : "text-black border-black";
+  const styleClass = inverse ? "stat-icon-inverse" : "stat-icon-normal";
   return (
     <span
-      className={`${base} ${size} ${style} font-black text-[10px] leading-none border bg-white ${
-        inverse ? "bg-black" : "bg-white"
-      }`}
+      className={`${styleClass} ${size}`}
       title={stat}
     >
       {abbr}
@@ -220,7 +217,7 @@ function PropertyIcon({
   const normalized = icon.startsWith("/") ? icon.slice(1) : icon;
   return (
     <span
-      className={`${size} inline-flex items-center justify-center bg-black border border-black`}
+      className={`${size} property-icon-container`}
     >
       <img
         src={`${STAR_RAIL_RES_BASE}${normalized}`}
@@ -276,7 +273,7 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-white">
+    <div className="page-container">
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -285,27 +282,27 @@ function HomePage() {
         }}
       ></div>
 
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-4xl relative">
-          <div className="absolute -top-16 md:-top-24 left-1/2 transform -translate-x-1/2 bg-white border-2 md:border-4 border-black p-3 md:p-6 z-20 shadow-lg text-center w-max md:w-auto">
-            <h1 className="text-2xl md:text-5xl font-black text-black tracking-tight leading-none mb-2 md:mb-3 md:whitespace-nowrap">
+      <div className="content-wrapper">
+        <div className="main-card">
+          <div className="header-container-mobile">
+            <h1 className="main-title">
               HONKAI STAR RAIL
             </h1>
             <div className="flex items-center justify-center gap-2 md:gap-3">
-              <div className="w-6 md:w-12 h-0.5 bg-black"></div>
-              <p className="text-sm md:text-lg font-bold text-black px-1 md:px-2">
+              <div className="title-divider"></div>
+              <p className="subtitle">
                 崩壊：スターレイル
               </p>
-              <div className="w-6 md:w-12 h-0.5 bg-black"></div>
+              <div className="title-divider"></div>
             </div>
-            <div className="absolute -bottom-3 md:-bottom-4 left-1/2 transform -translate-x-1/2 bg-black text-white px-2 md:px-4 py-1 transform -skew-x-12 z-30">
-              <h2 className="text-xs md:text-sm font-bold tracking-widest uppercase transform skew-x-12 whitespace-nowrap">
+            <div className="badge-mobile">
+              <h2 className="badge-text">
                 Profile Tracker
               </h2>
             </div>
           </div>
 
-          <div className="bg-white border-2 md:border-4 border-black p-4 md:p-8 relative pt-8 md:pt-12">
+          <div className="main-content-card">
             <form onSubmit={handleSubmit}>
               <label
                 htmlFor="uid"
