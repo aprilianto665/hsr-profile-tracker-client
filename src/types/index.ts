@@ -94,4 +94,5 @@ export interface Character {
 
 export interface ProfileData {
   player: Player;
+  characters?: Record<string, unknown>[];
 }

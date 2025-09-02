@@ -1,3 +1,5 @@
+export { transformCharacterData } from "./characterTransform";
+
 export function getStatIconPath(stat: string): string | null {
   const s = stat.toLowerCase();
   const iconMap: Record<string, string> = {
