@@ -4,3 +4,4 @@ export { StarRating } from "./StarRating";
 export { StatIcon } from "./StatIcon";
 export { PropertyIcon } from "./PropertyIcon";
 export { AnyStatIcon } from "./AnyStatIcon";
+export { Footer } from "./Footer";
