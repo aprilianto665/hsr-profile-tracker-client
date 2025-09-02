@@ -1,0 +1,1 @@
+export const STAR_RAIL_RES_BASE = "https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/";
