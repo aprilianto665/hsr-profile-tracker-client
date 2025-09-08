@@ -33,8 +33,10 @@ export interface Relic {
   mainStatValue: string;
   icon: string;
   slot: string;
-  subStats: { stat: string; value: string }[];
+  subStats: { stat: string; value: number }[];
   rarity?: number;
+  rank?: string;
+  score?: number;
 }
 
 export interface RelicSetEffect {
@@ -90,6 +92,11 @@ export interface Character {
   cavityRelics: Relic[];
   planarRelics: Relic[];
   relicSetEffects: RelicSetEffect[];
+  relicScore?: {
+    rank: string;
+    total_score: number;
+    average_score: number;
+  };
 }
 
 export interface ProfileData {

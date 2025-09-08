@@ -65,15 +65,15 @@ export function CharacterTab({ characters }: CharacterTabProps) {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
                       <div className="font-bold text-xs uppercase">Rank</div>
-                      <div className="text-6xl font-black">N/A</div>
+                      <div className="text-6xl font-black">{selectedCharacter.relicScore?.rank || "N/A"}</div>
                     </div>
                     <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
                       <div className="font-bold text-xs uppercase">Total Score</div>
-                      <div className="text-6xl font-black">N/A</div>
+                      <div className="text-6xl font-black">{selectedCharacter.relicScore?.total_score || "N/A"}</div>
                     </div>
                     <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
                       <div className="font-bold text-xs uppercase">Average Score</div>
-                      <div className="text-6xl font-black">N/A</div>
+                      <div className="text-6xl font-black">{selectedCharacter.relicScore?.average_score || "N/A"}</div>
                     </div>
                   </div>
                 </div>
@@ -151,11 +151,11 @@ export function CharacterTab({ characters }: CharacterTabProps) {
                           <div className="text-[10px] font-mono flex items-center space-x-3">
                             <div>
                               <span className="font-bold">Score</span>
-                              : N/A
+                              : {relic.score || "N/A"}
                             </div>
                             <div>
                               <span className="font-bold">Rank</span>
-                              : N/A
+                              : {relic.rank || "N/A"}
                             </div>
                           </div>
                         </div>

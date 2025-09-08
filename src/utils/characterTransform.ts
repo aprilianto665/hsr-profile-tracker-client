@@ -20,6 +20,8 @@ export function transformCharacterData(char: Record<string, unknown>): Character
       icon: relic.icon as string,
       slot: ['', 'Head', 'Hands', 'Body', 'Feet'][relic.type as number] || 'Unknown',
       rarity: relic.rarity as number || 5,
+      rank: relic.rank as string,
+      score: relic.score as number,
       subStats: ((relic.sub_affix as Array<Record<string, unknown>>)?.map((sub) => ({
         stat: sub.name as string,
         value: sub.value as string,
@@ -36,6 +38,8 @@ export function transformCharacterData(char: Record<string, unknown>): Character
       icon: relic.icon as string,
       slot: (relic.type as number) === 5 ? 'Planar Sphere' : 'Link Rope',
       rarity: relic.rarity as number || 5,
+      rank: relic.rank as string,
+      score: relic.score as number,
       subStats: ((relic.sub_affix as Array<Record<string, unknown>>)?.map((sub) => ({
         stat: sub.name as string,
         value: sub.value as string,
@@ -90,5 +94,6 @@ export function transformCharacterData(char: Record<string, unknown>): Character
       effect: '',
       icon: set.icon as string,
     })) || []),
+    relicScore: char.relic_score as { rank: string; total_score: number; average_score: number } | undefined,
   };
 }
