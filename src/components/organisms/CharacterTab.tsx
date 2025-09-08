@@ -62,25 +62,18 @@ export function CharacterTab({ characters }: CharacterTabProps) {
                   <span className="transform skew-x-12 inline-block">RELICS SCORE SUMMARY</span>
                 </h5>
                 <div className="space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
                       <div className="font-bold text-xs uppercase">Rank</div>
                       <div className="text-6xl font-black">N/A</div>
                     </div>
-                    <div className="bg-white border-2 border-black p-3">
-                      <div className="text-xs font-bold uppercase mb-1">Score Breakdown</div>
-                      <div className="flex justify-between text-sm font-mono">
-                        <span>Base Relic Score:</span>
-                        <span>N/A</span>
-                      </div>
-                      <div className="flex justify-between text-sm font-mono">
-                        <span>Set Bonus:</span>
-                        <span>N/A</span>
-                      </div>
-                      <div className="flex justify-between text-sm font-mono font-black">
-                        <span>Total:</span>
-                        <span>N/A</span>
-                      </div>
+                    <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
+                      <div className="font-bold text-xs uppercase">Total Score</div>
+                      <div className="text-6xl font-black">N/A</div>
+                    </div>
+                    <div className="bg-white border-2 border-black p-3 flex flex-col items-start">
+                      <div className="font-bold text-xs uppercase">Average Score</div>
+                      <div className="text-6xl font-black">N/A</div>
                     </div>
                   </div>
                 </div>
