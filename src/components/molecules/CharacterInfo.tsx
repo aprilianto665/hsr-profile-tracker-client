@@ -7,7 +7,7 @@ interface CharacterInfoProps {
 export function CharacterInfo({ character }: CharacterInfoProps) {
   return (
     <div className="mt-3 md:mt-0 md:flex-1">
-      <div className="text-left space-y-2">
+      <div className="hidden md:block text-left space-y-2">
         <h4 className="text-lg font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block">
           <span className="transform skew-x-12 inline-block">{character.name}</span>
         </h4>

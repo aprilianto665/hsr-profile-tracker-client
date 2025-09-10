@@ -19,18 +19,18 @@ export function ProfileNavigation({
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between mb-4 mt-6">
+    <div className="flex flex-col sm:flex-row justify-between gap-4 mb-4 mt-6">
       <Button
         onClick={() => navigate("/")}
-        className="px-4 py-2 bg-black text-white font-bold uppercase tracking-wide hover:bg-gray-800 border-2 border-black"
+        className="px-4 py-2 bg-black text-white font-bold text-sm uppercase tracking-wide hover:bg-gray-800 border-2 border-black"
       >
         ← BACK
       </Button>
-      <div className="flex gap-4">
+      <div className="flex gap-2 sm:gap-4 justify-end sm:justify-start">
         <Button
           onClick={onRefresh}
           disabled={refreshDisabled || refreshing}
-          className={`w-12 h-12 font-bold uppercase tracking-wide border-2 border-black flex items-center justify-center ${
+          className={`w-10 h-10 sm:w-12 sm:h-12 font-bold uppercase tracking-wide border-2 border-black flex items-center justify-center ${
             refreshDisabled || refreshing
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-white text-black hover:bg-gray-100"
@@ -40,11 +40,11 @@ export function ProfileNavigation({
             <img
               src="/herta-kurukuru.gif"
               alt="Loading"
-              className="w-8 h-8"
+              className="w-6 h-6 sm:w-8 sm:h-8"
             />
           ) : (
             <svg
-              className="w-4 h-4"
+              className="w-3 h-3 sm:w-4 sm:h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -60,7 +60,7 @@ export function ProfileNavigation({
         </Button>
         <Button
           onClick={() => onTabChange("info")}
-          className={`px-4 py-2 font-bold uppercase tracking-wide border-2 border-black ${
+          className={`px-3 py-2 sm:px-4 font-bold text-xs sm:text-sm uppercase tracking-wide border-2 border-black ${
             activeTab === "info"
               ? "bg-black text-white"
               : "bg-white text-black hover:bg-gray-100"
@@ -70,7 +70,7 @@ export function ProfileNavigation({
         </Button>
         <Button
           onClick={() => onTabChange("characters")}
-          className={`px-4 py-2 font-bold uppercase tracking-wide border-2 border-black ${
+          className={`px-3 py-2 sm:px-4 font-bold text-xs sm:text-sm uppercase tracking-wide border-2 border-black ${
             activeTab === "characters"
               ? "bg-black text-white"
               : "bg-white text-black hover:bg-gray-100"

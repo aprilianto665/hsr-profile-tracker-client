@@ -7,7 +7,7 @@ interface ProfileInfoTabProps {
 
 export function ProfileInfoTab({ profileData }: ProfileInfoTabProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 min-[980px]:grid-cols-4 gap-6">
       <InfoCard title="AVATAR" className="flex flex-col">
         <div className="flex flex-col items-center justify-center space-y-3 flex-1">
           <img
@@ -23,7 +23,7 @@ export function ProfileInfoTab({ profileData }: ProfileInfoTabProps) {
         </div>
       </InfoCard>
 
-      <InfoCard title="BASIC INFO" className="md:col-span-2">
+      <InfoCard title="BASIC INFO" className="md:col-span-1 min-[980px]:col-span-2">
         <div className="space-y-3">
           <InfoRow label="NICKNAME" value={profileData?.player?.nickname || 'Unknown'} />
           <InfoRow label="LEVEL" value={profileData?.player?.level || 0} />

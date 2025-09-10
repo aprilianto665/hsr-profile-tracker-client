@@ -8,10 +8,10 @@ interface LightConeDisplayProps {
 export function LightConeDisplay({ lightCone }: LightConeDisplayProps) {
   return (
     <>
-      <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block mb-3">
+      <h5 className="text-sm font-black uppercase tracking-widest bg-black text-white px-3 py-1 border-2 border-black transform -skew-x-12 inline-block my-3">
         <span className="transform skew-x-12 inline-block">LIGHT CONE</span>
       </h5>
-      <div className="flex items-center space-x-3 mb-4">
+      <div className="flex flex-col md:flex-row items-center md:items-center space-y-3 md:space-y-0 md:space-x-3 mb-4">
         <div className="relative flex-shrink-0">
           <div className="w-24 h-24 border-2 border-black bg-white flex items-center justify-center">
             <img src={lightCone.icon} alt={lightCone.name} className="w-full h-full object-contain" />
@@ -23,12 +23,12 @@ export function LightConeDisplay({ lightCone }: LightConeDisplayProps) {
             <StarRating count={lightCone.rarity} />
           </div>
         </div>
-        <div className="text-sm">
+        <div className="text-sm text-center md:text-left">
           <div className="font-mono font-bold break-words mb-1">{lightCone.name}</div>
           <div className="font-mono">Level: {lightCone.level}</div>
           {lightCone.attributes && lightCone.attributes.length > 0 && (
             <div className="bg-white border-2 border-black p-2 mt-2">
-              <div className="flex flex-nowrap gap-x-4 text-xs overflow-x-auto">
+              <div className="flex flex-nowrap gap-x-4 text-xs overflow-x-auto justify-center md:justify-start">
                 {lightCone.attributes.map((attr, idx) => (
                   <div key={idx} className="flex items-center">
                     <div className="w-5 h-5 inline-flex items-center justify-center bg-black border border-black">
