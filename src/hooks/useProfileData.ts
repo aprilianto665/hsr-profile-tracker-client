@@ -19,8 +19,8 @@ export function useProfileData(uid: string | undefined) {
       }
       
       const url = refresh 
-        ? `http://localhost:3000/profile/${uid}?refresh=true` 
-        : `http://localhost:3000/profile/${uid}`;
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/${uid}?refresh=true` 
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/${uid}`;
       
       const response = await fetch(url);
       const result = await response.json();

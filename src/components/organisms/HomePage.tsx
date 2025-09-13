@@ -11,7 +11,7 @@ export function HomePage() {
     e.preventDefault();
     if (uid.trim()) {
       try {
-        const response = await fetch(`http://localhost:3000/checkprofile/${uid}`);
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/checkprofile/${uid}`);
         const data = await response.json();
         if (data.exists) {
           navigate(`/profile/${uid}`);
